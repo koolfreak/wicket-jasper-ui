@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<display-name>wicket-jasper-web</display-name>
+
+	<!--  
+		There are three means to configure Wickets configuration mode and they are
+		tested in the order given. 
+		1) A system property: -Dwicket.configuration
+		2) servlet specific <init-param>
+		3) context specific <context-param>
+		The value might be either "development" (reloading when templates change)
+		or "deployment". If no configuration is found, "development" is the default.
+	-->
+
+
+	<filter>
+		<filter-name>opensessioninview</filter-name>
+		<filter-class>
+			org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
+		</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>opensessioninview</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/config/application-jasper-config.xml
+		</param-value>
+	</context-param>
+
+	<filter>
+		<filter-name>wicket.wicket-jasper-web</filter-name>
+		<filter-class>
+			org.apache.wicket.protocol.http.WicketFilter
+		</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>com.ccti.jasper.JasperApplication</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>wicket.wicket-jasper-web</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Jasper Report servlet -->
+	<servlet>
+		<servlet-name>ImageServlet</servlet-name>
+		<servlet-class>
+			net.sf.jasperreports.j2ee.servlets.ImageServlet
+		</servlet-class>
+	</servlet>
+
+	<!-- Jasper Report servlet mapping -->
+	<servlet-mapping>
+		<servlet-name>ImageServlet</servlet-name>
+		<url-pattern>/servlets/image</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>JasperLogout</servlet-name>
+		<servlet-class>
+			com.ccti.jasper.servlet.JasperLogOutServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JasperLogout</servlet-name>
+		<url-pattern>/remoteout/*</url-pattern>
+	</servlet-mapping>
+</web-app>
