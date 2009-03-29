@@ -10,8 +10,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.markup.html.WebPage;
 
 import com.ccti.jasper.JasperApplication;
-import com.ccti.jasper.ReportSession;
-import com.ccti.jasper.serialized.JasperObject;
 
 
 /**
@@ -34,9 +32,4 @@ public abstract class BaseJasperPage extends WebPage
         return JasperApplication.get().getServletContext();
     }
     
-    public void addToSession(JasperObject object)
-    {
-	log.info("adding user to report session");
-	ReportSession.get().setJasperObject(object);
-    }
 }

@@ -10,8 +10,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.apache.wicket.util.time.Duration;
 
 import com.ccti.jasper.web.common.JasperIndexPage;
-import com.ccti.jasper.web.common.ReportRemoteCall;
-import com.ccti.jasper.web.common.ReportRemoteClassCall;
+import com.ccti.jasper.web.core.ReportRemoteClassCall;
 
 /**
  * Application object for your web application. If you want to run this application without deploying, run the Start class.
@@ -40,7 +39,6 @@ public class JasperApplication extends WebApplication
 		getResourceSettings().setResourcePollFrequency(Duration.ONE_SECOND);
 		
 		mount(new QueryStringUrlCodingStrategy("reports", ReportRemoteClassCall.class));
-		mount(new QueryStringUrlCodingStrategy("remoteauth", ReportRemoteCall.class));
 	}
 	/**
 	 * @see wicket.Application#getHomePage()
@@ -55,11 +53,10 @@ public class JasperApplication extends WebApplication
 	    return (JasperApplication) Application.get();
 	}
 
-	/*@Override
 	public Session newSession(Request request, Response response)
 	{
 	    return new ReportSession(request);
-	}*/
+	}
 	
 	
 }
