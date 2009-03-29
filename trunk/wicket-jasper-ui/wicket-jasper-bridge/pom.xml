@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -14,7 +15,7 @@
 	<artifactId>wicket-jasper-bridge</artifactId>
 	<packaging>war</packaging>
 
-	<name>quickstart</name>
+	<name>wicket-jasper-brdige</name>
 	<version>1.0-SNAPSHOT</version>
 	<description></description>
 
@@ -67,6 +68,18 @@
 	</build>
 
 	<dependencies>
+	
+		<dependency>
+			<groupId>com.ccti.jasper</groupId>
+			<artifactId>wicket-jasper-webservice</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ccti.jasper</groupId>
+			<artifactId>wicket-jasper-httpservice</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket</artifactId>
