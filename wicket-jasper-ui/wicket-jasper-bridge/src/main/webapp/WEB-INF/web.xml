@@ -22,7 +22,8 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			/WEB-INF/jasper-config.xml
+			classpath:jasper-config.xml,
+			classpath:wicket-jasper-cxfclient-impl.xml
 		</param-value>
 	</context-param>
 
@@ -42,11 +43,11 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<!-- servlet object serializer -->
 	<servlet>
 		<servlet-name>reportObject</servlet-name>
-		<servlet-class>com.ccti.jasper.bridge.servlet.JasperObjectServlet</servlet-class>
+		<servlet-class>com.ccti.jasper.http.service.JasperObjectServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>reportObject</servlet-name>
 		<url-pattern>/bridge/*</url-pattern>
