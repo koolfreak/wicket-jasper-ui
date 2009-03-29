@@ -6,14 +6,11 @@ package com.ccti.jasper.componet;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.cxf.frontend.ClientProxyFactoryBean;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import com.ccti.jasper.bridge.SimpleServiceReportPage;
 import com.ccti.jasper.cxf.webservice.JasperCXFService;
-import com.ccti.jasper.cxf.webservice.JasperServiceModel;
 
 
 /**
@@ -55,17 +52,7 @@ public abstract class JasperServiceContainer extends WebMarkupContainer
 	    throw new IllegalArgumentException("Report id must not be empty");
 	}
 	
-	log.info("get report id = "+jasperId);
-	
-	//final JasperModel reportClass = jasperCXFService.getModel(); //.callReportName(reportClassName, jasperId);
-	//log.info("model value = "+reportClass.getId());
-	/*ClientProxyFactoryBean factory = new ClientProxyFactoryBean();
-	factory.setServiceClass(JasperCXFService.class);
-	factory.setAddress("http://localhost:8080/jasper/services/jasperservice/");
-	JasperCXFService client = (JasperCXFService) factory.create();*/
-	
-	final String reportClass = jasperCXFService.callReportName("simple", jasperId);
-	log.info("report class = "+reportClass);
+	final String reportClass = jasperCXFService.callReportName(reportClassName, jasperId);
 	
 	final StringBuilder build = new StringBuilder();
 	build.append(reportServerUrl).append("?wicket:bookmarkablePage=:");
