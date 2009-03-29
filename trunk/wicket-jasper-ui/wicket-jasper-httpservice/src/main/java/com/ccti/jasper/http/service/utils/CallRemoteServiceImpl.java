@@ -14,8 +14,6 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-
 
 /**
  * @author Emmanuel A. Nollase - emanux
