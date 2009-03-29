@@ -29,6 +29,16 @@ public class JasperMenu extends Panel
 	    
 	}));
 	
+	add((new Link("simple-service"){
+
+	    @Override
+	    public void onClick()
+	    {
+		setResponsePage(SimpleServiceReportPage.class);
+	    }
+	    
+	}));
+	
 	add(new BookmarkablePageLink("logout",JasperLogoutPage.class));
 	/*{
 
@@ -42,24 +52,5 @@ public class JasperMenu extends Panel
 	
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.wicket.Component#getStatelessHint()
-     */
-    @Override
-    protected boolean getStatelessHint()
-    {
-	return false;
-    }
-
-    /* (non-Javadoc)
-     * @see org.apache.wicket.Component#isVersioned()
-     */
-    @Override
-    public boolean isVersioned()
-    {
-	return false;
-    }
-    
-    
 }
 

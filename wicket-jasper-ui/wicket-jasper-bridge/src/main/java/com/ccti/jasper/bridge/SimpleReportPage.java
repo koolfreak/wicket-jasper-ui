@@ -2,8 +2,10 @@ package com.ccti.jasper.bridge;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import com.ccti.jasper.componet.JasperContainer;
+import com.ccti.jasper.http.service.utils.CallRemoteService;
 
 /**
  * @author Emmanuel A. Nollase - emanux
@@ -15,24 +17,16 @@ public class SimpleReportPage extends JasperBridgeIndex
     
     private static final long serialVersionUID = 1L;
 
-    private static final String reportName = "com.ccti.jasper.web.pages.SimpleHtmlReport";
+    @SpringBean CallRemoteService remoteService;
 
-    transient JasperContainer cont;
-    /**
-     * Constructor that is invoked when page is invoked without a session.
-     * 
-     * @param parameters
-     *                Page parameters
-     */
     public SimpleReportPage()
     {
-	final String reportServerUrl = "http://localhost:8282/jasper/reports";
-	//final String reportServerUrl = "http://www.google.com.ph/";
+	final String reportServerUrl = remoteService.jasperServerURL();// "http://localhost:8282/jasper/reports";
+	final String reportName = "simple";
 	
-	//final String jasperId = getReportId();
-	log.info("Here in report page");
+	final String jasperId = getReportId();
 	
-	cont = new JasperContainer("wmc","") {
+	final JasperContainer cont = new JasperContainer("wmc",jasperId) {
 
 	    @Override
 	    public String getReportClassName()

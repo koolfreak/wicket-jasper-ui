@@ -5,8 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import com.ccti.jasper.bridge.JasperBridgeIndex;
-import com.ccti.jasper.bridge.utils.CallRemoteService;
-import com.ccti.jasper.session.JasperSession;
+import com.ccti.jasper.http.service.utils.CallRemoteService;
 
 
 /**
@@ -23,10 +22,9 @@ public class JasperLogoutPage extends JasperBridgeIndex
     public JasperLogoutPage()
     {
 	// remove user from remote report server
-	log.info("here in logout page");
-	//final String id = getReportId();
-	//log.debug("Removing report id = "+id);
-	//remoteService.callRemoteLogout(id);
+	final String id = getReportId();
+	log.debug("Removing report id = "+id);
+	remoteService.callRemoteLogout(id);
     }
 }
 
