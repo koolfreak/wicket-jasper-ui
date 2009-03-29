@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carnelian>
+	<jasper-reports>
+	
+		<report name="simple" type="com.ccti.jasper.web.pages.SimpleHtmlReport"/>
+	
+	</jasper-reports>
+	
+	<!-- 
+		| main application bridge servlet. jasper object serializer 
+	`	| Place here the courier-management url for bridge servlet
+		| for example in my tomcat server: http://192.168.1.224:8070/bridge
+		| it's a servlet. 
+		| if you have context-root append..e.g .../[context-here]/bridge
+	-->
+	<carnelian-bridge-url>http://localhost:8070/bridge</carnelian-bridge-url>
+	
+</carnelian>
