@@ -19,7 +19,7 @@
 		<property name="httpConnectionManager" ref="connectManager"/>
 	</bean>
 	
-	<bean id="callRemoteService" class="com.ccti.carnelian.jasper.server.utils.CallRemoteServiceImpl">
+	<bean id="callRemoteService" class="com.ccti.jasper.http.service.utils.CallRemoteServiceImpl">
 		<property name="loginReportURL" value="${jasper.remote.login.url}"/>
 		<property name="logoutReportURL" value="${jasper.remote.logout.url}"/>
 		<property name="jasperServerURL" value="${jasper.main.report.caller}"/>
