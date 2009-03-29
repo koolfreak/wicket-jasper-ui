@@ -4,13 +4,8 @@
 package com.ccti.jasper.componet;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-
-import com.ccti.jasper.session.JasperSession;
 
 
 /**

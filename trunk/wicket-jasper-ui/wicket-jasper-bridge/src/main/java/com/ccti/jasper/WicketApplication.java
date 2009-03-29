@@ -4,12 +4,9 @@ import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.target.coding.QueryStringUrlCodingStrategy;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
-import com.ccti.jasper.bridge.ReportBridgeCall;
-import com.ccti.jasper.bridge.login.JasperLoginPage;
-import com.ccti.jasper.bridge.servlet.PageExpiredPage;
+import com.ccti.jasper.bridge.base.JasperBridgeIndexPage;
 import com.ccti.jasper.session.JasperSession;
 
 /**
@@ -31,7 +28,7 @@ public class WicketApplication extends WebApplication
 	 */
 	public Class getHomePage()
 	{
-		return JasperLoginPage.class;
+		return JasperBridgeIndexPage.class;
 	}
 	
 	
@@ -44,9 +41,7 @@ public class WicketApplication extends WebApplication
 	    
 	    addComponentInstantiationListener(new SpringComponentInjector(this));
 	    
-	   // getApplicationSettings().setPageExpiredErrorPage(PageExpiredPage.class);
 	    getPageSettings().setAutomaticMultiWindowSupport(true);
-	    //mount(new QueryStringUrlCodingStrategy("bridge",ReportBridgeCall.class));
 	}
 
 	@Override
