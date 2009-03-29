@@ -1,13 +1,14 @@
-package com.ccti.jasper.web.common;
+package com.ccti.jasper.web.core;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.PageParameters;
 
+import com.ccti.jasper.http.service.LoggedReportUser;
+import com.ccti.jasper.web.common.BaseJasperPage;
 import com.ccti.jasper.web.pages.error.ReportNotAuthorizedPage;
 import com.ccti.jasper.web.pages.error.ReportNotFoundPage;
-import com.ccti.jasper.web.utils.LoggedReportUser;
 
 /**
  * @author Emmanuel A. Nollase - emanux
@@ -27,17 +28,17 @@ public class ReportRemoteClassCall extends BaseJasperPage
 	{
 	    setResponsePage(ReportNotFoundPage.class);
 	}
-	/*else if( !LoggedReportUser.contains(reportId) )
+	else if( !LoggedReportUser.contains(reportId) )
 	{
-	    // TODO change to more informative page
 	    setResponsePage(ReportNotAuthorizedPage.class);
-	}*/
+	}
 	else
 	{
 	    try
 	    {
 		log.debug("Loading report = " + reportClass);
-		final Class<?> clazz = Class.forName(reportClass);
+		final String _clazz = JasperReportFactory.getReportClass(reportClass);
+		final Class<?> clazz = Class.forName(_clazz);
 		setResponsePage(clazz);
 	    }
 	    catch (ClassNotFoundException e)

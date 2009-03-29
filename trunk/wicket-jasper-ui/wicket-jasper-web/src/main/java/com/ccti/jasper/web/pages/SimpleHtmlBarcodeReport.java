@@ -16,7 +16,7 @@ import wicket.contrib.jasperreports.paging.JRPdfDataView;
 import com.ccti.jasper.model.customer.CustomerSales;
 import com.ccti.jasper.service.customer.CustomerSalesService;
 import com.ccti.jasper.web.common.JasperIndexPage;
-import com.ccti.jasper.web.utils.JasperQueryProvider;
+import com.ccti.jasper.web.pages.utils.JasperQueryProvider;
 
 
 /**

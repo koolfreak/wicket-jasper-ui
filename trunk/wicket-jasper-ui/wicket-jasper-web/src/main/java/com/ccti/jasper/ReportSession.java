@@ -6,7 +6,7 @@ package com.ccti.jasper;
 import org.apache.wicket.Request;
 import org.apache.wicket.protocol.http.WebSession;
 
-import com.ccti.jasper.serialized.JasperObject;
+import com.ccti.jasper.http.service.JasperObject;
 
 
 /**

@@ -13,13 +13,14 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import wicket.contrib.jasperreports.JRPdfResource;
+import wicket.contrib.jasperreports.link.JRResourceLink;
 import wicket.contrib.jasperreports.paging.JRHtmlDataView;
 
 import com.ccti.jasper.model.customer.CustomerSales;
 import com.ccti.jasper.service.customer.CustomerSalesService;
 import com.ccti.jasper.web.common.JasperIndexPage;
-import com.ccti.jasper.web.utils.JasperQueryProvider;
-import com.ccti.jasper.web.utils.LoggedReportUser;
+import com.ccti.jasper.web.pages.utils.JasperQueryProvider;
 
 
 /**
@@ -29,7 +30,6 @@ import com.ccti.jasper.web.utils.LoggedReportUser;
  */
 public class SimpleHtmlReport extends JasperIndexPage
 {
-    private static final Log log = LogFactory.getLog(SimpleHtmlReport.class);
     
     @SpringBean private CustomerSalesService customerSalesService;
     
@@ -73,6 +73,12 @@ public class SimpleHtmlReport extends JasperIndexPage
     	
 	  add(jrdv);
 	  add(new PagingNavigator("navigation", jrdv));
+	  
+	  JRPdfResource pdf = new JRPdfResource(reportFile);
+	  pdf.setReportDataSource(new JRBeanCollectionDataSource(customerSalesService.loadAll()));
+	  pdf.setReportParameters(new HashMap<String, Object>());
+	  
+	  add(new JRResourceLink("pdf", pdf));
     }
 
     @Override
