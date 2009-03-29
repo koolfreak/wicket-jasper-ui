@@ -40,12 +40,14 @@ public class JasperLogInServlet extends HttpServlet
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
     throws ServletException, IOException
     {
+	
+	
 	ObjectInputStream ins = null;
 	
-	final String reportServerUrl = "";//JasperConfiguration.getString("carnelian-bridge-url", null);//"http://localhost:8070/bridge";
+	final String reportServerUrl = getInitParameter("bridge-url");//JasperConfiguration.getString("carnelian-bridge-url", null);//"http://localhost:8070/bridge";
 	if(StringUtils.isEmpty(reportServerUrl))
 	{
-	    throw new IllegalArgumentException("Bridge Server Url mus not be empty ");
+	    throw new IllegalArgumentException("Bridge Server Url must not be empty ");
 	}
 	try
 	{
@@ -82,7 +84,5 @@ public class JasperLogInServlet extends HttpServlet
 	}
     }
     
-    
-
 }
 

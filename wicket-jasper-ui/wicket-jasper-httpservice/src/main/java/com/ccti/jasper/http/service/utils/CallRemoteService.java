@@ -19,9 +19,10 @@ public interface CallRemoteService
     /**
      * Logout user from remote report server
      * @param id - assigned user report id
-     * @return 
+     * @return <code>true</code> if successfully remove from remote report server, <code>false</code> otherwise
      */
     boolean callRemoteLogout(final String id);
+    
     
     String jasperServerURL();
     
