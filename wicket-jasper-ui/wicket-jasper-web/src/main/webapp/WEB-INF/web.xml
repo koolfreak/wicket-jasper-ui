@@ -79,17 +79,6 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>JasperLogout</servlet-name>
-		<servlet-class>
-			com.ccti.jasper.servlet.JasperLogOutServlet
-		</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>JasperLogout</servlet-name>
-		<url-pattern>/remoteout/*</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
 		<servlet-name>CXFServlet</servlet-name>
 		<servlet-class>
 			org.apache.cxf.transport.servlet.CXFServlet
