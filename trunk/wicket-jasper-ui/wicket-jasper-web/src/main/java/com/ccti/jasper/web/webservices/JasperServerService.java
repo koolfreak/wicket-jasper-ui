@@ -65,12 +65,22 @@ public class JasperServerService implements JasperCXFService
 	return _success;
     }
 
-    public void setUserCredentials(JasperServiceModel model)
+    public boolean setUserCredentials(JasperServiceModel model)
     {
+	boolean _succezz = false;
+	try
+	{
+	    LoggedServiceUser.addReportuser(model);
+	    LoggedServiceUser.printLoggedUser();
+	    _succezz = true;
+	}
+	catch (RuntimeException e)
+	{
+	    e.printStackTrace();
+	    _succezz = false;
+	}
 	
-	LoggedServiceUser.addReportuser(model);
-	LoggedServiceUser.printLoggedUser();
-
+	return _succezz;
     }
 
     public boolean verifyReportUser(String reportId)
