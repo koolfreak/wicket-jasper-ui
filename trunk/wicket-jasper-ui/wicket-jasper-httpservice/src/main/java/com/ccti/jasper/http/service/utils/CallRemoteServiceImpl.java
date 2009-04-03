@@ -57,39 +57,39 @@ public class CallRemoteServiceImpl implements CallRemoteService
      * @param method
      * @return
      */
-    private synchronized boolean sendToReportServer(final PostMethod method)
+    private boolean sendToReportServer(final PostMethod method)
     {
-	log.info("Sending to remote jasper report server");
-
+	boolean _success = false;
 	// Provide custom retry handler is necessary
 	method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
 	new DefaultHttpMethodRetryHandler(3, false));
 
+	 long start = System.currentTimeMillis();
 	try
 	{
+	    log.debug("Start executing authencation in remote server: "+start);
 	    // Execute the method.
 	    int statusCode = httpClient.executeMethod(method);
 
 	    if (statusCode != HttpStatus.SC_OK)
 	    {
-		System.err.println("Method failed: " + method.getStatusLine());
-		return false;
+		log.warn("Method failed: " + method.getStatusLine());
+		_success = false;
 	    }
-	    log.info("Finish sending to remote server");
-
-	    return true;
-
+	    else
+	    {
+		_success = true;
+	    }
+	    log.debug("Finish sending authenticating to remote server");
 	}
 	catch (HttpException e)
 	{
 	   log.error("Fatal protocol violation: " + e);
+	   _success = false;
 	}
-	/*catch(TimeoutException e)
-	{
-	    
-	}*/
 	catch (IOException e)
 	{
+	    _success = false;
 	   log.error("Fatal transport error: " + e);
 	}
 	finally
@@ -97,8 +97,9 @@ public class CallRemoteServiceImpl implements CallRemoteService
 	    // Release the connection.
 	    method.releaseConnection();
 	}
-	
-	return false;
+	long end = System.currentTimeMillis() - start;
+	log.debug("Finish server routines..it takes: "+ end +" milliseconds.");
+	return _success;
     }
 
     
