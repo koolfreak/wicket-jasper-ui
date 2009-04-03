@@ -77,7 +77,7 @@ public class LoggedReportUser
 	log.debug("Currently logged users: ");
 	for (JasperObject obj : REPORT_USER)
 	{
-	    log.debug("username = " + obj.getUsername() +" id = "+obj.getReportId());
+	    log.debug("username = " + obj.getUsername());
 	}
     }
     
