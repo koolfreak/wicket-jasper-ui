@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.link.Link;
 /**
  * @author Emmannuel A. Nollase Created: Feb 2, 2009 - 4:19:05 PM
  */
+@Deprecated
 public class JRResourceLink extends Link implements IResourceListener
 {
 
@@ -35,8 +36,10 @@ public class JRResourceLink extends Link implements IResourceListener
      * 
      * @see org.apache.wicket.markup.html.link.Link#onClick()
      */
+    @Override
     public void onClick()
     {
+	onResourceRequested();
     }
 
     /*
@@ -47,7 +50,7 @@ public class JRResourceLink extends Link implements IResourceListener
     public void onResourceRequested()
     {
 	resource.onResourceRequested();
-	onClick();
+	//onClick();
     }
 
     protected final CharSequence getURL()
