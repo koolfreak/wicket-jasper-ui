@@ -1,10 +1,5 @@
 package com.ccti.jasper.bridge;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.wicket.Page;
-import org.apache.wicket.RestartResponseAtInterceptPageException;
-
 import com.ccti.jasper.session.JasperSession;
 
 /**
@@ -15,15 +10,13 @@ import com.ccti.jasper.session.JasperSession;
 public class JasperBridgeIndex extends JasperBaseBridgePage
 {
 
-    private static final Log log = LogFactory.getLog(JasperBridgeIndex.class);
-
     private final String reportId;
 
     public JasperBridgeIndex()
     {
 	add(new JasperMenu("menu"));
 	
-	reportId = JasperSession.get().getJasperObject().getReportId();
+	reportId = JasperSession.get().getReportId();
 	
     }
 

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ccti.jasper.bridge.login;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -16,52 +13,51 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import com.ccti.jasper.bridge.JasperBridgeIndex;
-import com.ccti.jasper.http.service.JasperObject;
-import com.ccti.jasper.http.service.JasperSingle;
-import com.ccti.jasper.http.service.utils.CallRemoteService;
+import com.ccti.jasper.cxf.webservice.JasperCXFService;
+import com.ccti.jasper.cxf.webservice.JasperServiceModel;
 import com.ccti.jasper.session.JasperSession;
 
+
 /**
- * @author Emmanuel A. Nollase - emanux
- * @created Feb 27, 2009 - 2:33:31 PM
- * 
+ * @author Emmanuel Nollase - emanux
+ * created: May 24, 2009 - 7:29:29 PM
  */
-public class JasperLoginPage extends WebPage
+public class JasperServiceLogin extends WebPage
 {
-    @SpringBean private CallRemoteService remoteService;
+
+ @SpringBean private JasperCXFService jasperCXFService;
     
-    private static final Log log = LogFactory.getLog(JasperLoginPage.class);
+    private static final Log log = LogFactory.getLog(JasperServiceLogin.class);
     
-    
-    public JasperLoginPage()
+    public JasperServiceLogin()
     {
-	final Form form = new Form("login", new CompoundPropertyModel(new JasperObject()));
+	final Form form = new Form("login", new CompoundPropertyModel(new JasperServiceModel()));
 	add(form);
 	
 	final FeedbackPanel feed = new FeedbackPanel("feedback");
 	form.add(feed.setOutputMarkupId(true));
 	
-	form.add(new RequiredTextField("username"));
+	form.add(new RequiredTextField("userName"));
 
 	final IndicatingAjaxButton login = new IndicatingAjaxButton("butt", form) {
 
 	    @Override
 	    protected void onSubmit(AjaxRequestTarget target, Form form)
 	    {
-		final JasperObject obj = (JasperObject) form.getModelObject();
+		final JasperServiceModel obj = (JasperServiceModel) form.getModelObject();
+		// create a report id w/ 50 characters
 		obj.setReportId(RandomStringUtils.randomAlphanumeric(50));
 
-		JasperSingle jast = JasperSingle.getInstance();
-		jast.setJasperObject(obj);
-		JasperSession.get().setReportId(obj.getReportId());
+		boolean _success = jasperCXFService.setUserCredentials(obj);
 		
-		if (remoteService.callRemoteLogin())
+		if( _success )
 		{
+		    JasperSession.get().setReportId(obj.getReportId());
 		    setResponsePage(JasperBridgeIndex.class);
 		}
 		else
 		{
-		    log.debug("Failed to send to report server");
+		    log.info("Failed to set user credentials to report server");
 		}
 	    }
 	    @Override
@@ -74,5 +70,5 @@ public class JasperLoginPage extends WebPage
 
 	form.add(login);
     }
-
 }
+
