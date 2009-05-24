@@ -7,39 +7,30 @@ import org.apache.wicket.Request;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 
-import com.ccti.jasper.http.service.JasperObject;
-
-
 /**
  * @author Emmanuel A. Nollase - emanux
  * @created Feb 26, 2009 - 3:01:53 PM
  * 
  */
-public class JasperSession extends WebSession
-{
+public class JasperSession extends WebSession {
 
-    private JasperObject jasperObject;
-    
-    public JasperSession(Request request)
-    {
-	super(request);
-    }
+	private String reportId;
 
-    public static JasperSession get()
-    {
-	return (JasperSession) Session.get();
-    }
-    
-    public synchronized JasperObject getJasperObject()
-    {
-        return jasperObject;
-    }
+	public JasperSession(Request request) {
+		super(request);
+	}
 
-    
-    public synchronized void setJasperObject(JasperObject jasperObject)
-    {
-        this.jasperObject = jasperObject;
-        dirty();
-    }
+	public static JasperSession get() {
+		return (JasperSession) Session.get();
+	}
+
+	public synchronized String getReportId() {
+		return reportId;
+	}
+
+	public synchronized void setReportId(String reportId) {
+		this.reportId = reportId;
+		dirty();
+	}
 
 }
