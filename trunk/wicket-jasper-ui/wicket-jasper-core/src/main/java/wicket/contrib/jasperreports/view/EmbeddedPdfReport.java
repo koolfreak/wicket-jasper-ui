@@ -21,7 +21,6 @@ public class EmbeddedPdfReport extends WebComponent implements IResourceListener
 	 * @uml.associationEnd  
 	 */
 	transient final JRResource resource;
-
 	/**
 	 * Construcxt.
 	 * 
@@ -41,7 +40,7 @@ public class EmbeddedPdfReport extends WebComponent implements IResourceListener
 	 */
 	public void onResourceRequested()
 	{
-		resource.onResourceRequested();
+	       resource.onResourceRequested();
 	}
 
 	/**
@@ -53,7 +52,7 @@ public class EmbeddedPdfReport extends WebComponent implements IResourceListener
 		{
 			findMarkupStream().throwMarkupException(
 					"Component "
-							+ getId() + " must be applied to a tag of type 'object' not "
+							+ getId() + " must be applied to a tag of type 'embed' not "
 							+ tag.toUserDebugString());
 		}
 		tag.put("src", getResponse().encodeURL(urlFor(IResourceListener.INTERFACE)));
@@ -61,4 +60,5 @@ public class EmbeddedPdfReport extends WebComponent implements IResourceListener
 		tag.put("fullscreen", "yes");
 		super.onComponentTag(tag);
 	}
+
 }
