@@ -83,7 +83,7 @@ public final class JRHtmlResource extends JRResource
 	    final JRHtmlExporter htmlexporter =  new JRHtmlExporter();
 	    htmlexporter.setParameter(JRHtmlExporterParameter.HTML_HEADER, "");
 	    htmlexporter.setParameter(JRHtmlExporterParameter.HTML_FOOTER, "");
-	    htmlexporter.setParameter(JRHtmlExporterParameter.IMAGES_URI, "servlets/image?image=");
+	    htmlexporter.setParameter(JRHtmlExporterParameter.IMAGES_URI, "../../servlets/image?image=");
 
 	    return htmlexporter;
 	}
