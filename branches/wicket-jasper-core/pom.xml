@@ -6,19 +6,23 @@
 
 	<groupId>com.ccti.jasper</groupId>
 	<artifactId>wicket-jasper-core</artifactId>
-	<version>1.6.0-debug</version>
+	<version>2.0.0</version>
 	<packaging>jar</packaging>
 
 	<!-- TODO project name  -->
 	<name>wicket-jasper-core</name>
 	<description>Wicket JasperReport Core libraries</description>
 
-	<!-- TODO
-		<organization>
-		<name>company name</name>
-		<url>company url</url>
-		</organization>
-	-->
+	<developers>
+		<developer>
+			<name>Emmanuel A. Nollase</name>
+			<email>eman.nollase@gmail.com</email>
+			<roles>
+				<role>Java Architect</role>
+				<role>Technical Analyst</role>
+			</roles>
+		</developer>
+	</developers>
 
 	<licenses>
 		<license>
