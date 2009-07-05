@@ -449,7 +449,7 @@ public abstract class JRResource extends DynamicWebResource
 	protected JasperPrint newJasperPrint() throws JRException
 	{
 	    final String cache = getCahceDir();
-		log.debug("cache directory: "+cache);
+		log.debug("jasper cache directory: "+cache);
 		
 		fileVirtualizer =   new JRFileVirtualizer(3, cache);
 		JasperReport report = getJasperReport();
