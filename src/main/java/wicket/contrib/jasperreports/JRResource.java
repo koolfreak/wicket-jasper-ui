@@ -448,7 +448,8 @@ public abstract class JRResource extends DynamicWebResource
 	 */
 	protected JasperPrint newJasperPrint() throws JRException
 	{
-	    	final String cache = getCahceDir();
+	    final String cache = getCahceDir();
+		log.debug("cache directory: "+cache);
 		
 		fileVirtualizer =   new JRFileVirtualizer(3, cache);
 		JasperReport report = getJasperReport();
@@ -517,12 +518,12 @@ public abstract class JRResource extends DynamicWebResource
 	    String dirCache = System.getProperty("org.jasper.cache.dir");
 	    if( dirCache.equals("") || dirCache == null)
 	    {
-		dirCache = System.getenv("user.home") + File.pathSeparator + "jasperCache";
-		final File dircache = new File(dirCache);
-		if( !dircache.exists() )
-		{
-		    dircache.mkdir();
-		}
+			dirCache = System.getenv("user.home") + File.pathSeparator + "jasperCache";
+			final File dircache = new File(dirCache);
+				if( !dircache.exists() )
+				{
+				    dircache.mkdir();
+				}
 	    }
 	    return dirCache;
 	}
