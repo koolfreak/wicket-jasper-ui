@@ -59,7 +59,6 @@ public abstract class JRPdfDataView<E> extends JRDataViewBase
 	final int size = getDataViewSize();
 	if (size > 0)
 	{
-
 	    // reset previously stored data in the collection
 	    datas.clear();
 	    // Automatically rebuild all ListItems before rendering the list
@@ -73,7 +72,6 @@ public abstract class JRPdfDataView<E> extends JRDataViewBase
 	    {
 		datas.add(data.next());
 	    }
-
 	   /* if (hasChildren)
 	    {
 		// If this component does not already exist, populate it
@@ -100,7 +98,7 @@ public abstract class JRPdfDataView<E> extends JRDataViewBase
     {
 	embeddedPdfReport = new EmbeddedPdfReport("report", getPdfResource());
 	item.add(embeddedPdfReport);
-	log.debug("Finish exporting [PDF] report...");
+	log.info("Finish exporting [PDF] report...");
     }
 
     protected JRResource getPdfResource() 
