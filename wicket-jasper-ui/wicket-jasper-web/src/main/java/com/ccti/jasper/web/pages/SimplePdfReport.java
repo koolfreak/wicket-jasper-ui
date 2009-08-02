@@ -33,27 +33,24 @@ public class SimplePdfReport extends JasperIndexPage
     {
 	final File reportFile = new File(getContext().getRealPath("/reports/customer_sales_report.jasper"));
     	
-	final String userHome = System.getProperty("user.home");
+	final String cache = "c:\\jaspercache";
 	
-	final String cache = userHome+"/logs";
-	final File createCache = new File("cache");
-	if( !createCache.exists() )
-	{
-	    createCache.mkdir();
-	}
-	log.info("jasper cache = "+cache);
+	/*log.info("jasper cache = "+cache);
 	final JRFileVirtualizer fileVirtualizer =
-	    new JRFileVirtualizer(3, cache);
+	    new JRFileVirtualizer(3, cache);*/
 
 	
 	final Map<String, Object> parameters = new HashMap<String, Object>();
-    	parameters.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
-	
+    	//parameters.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
+    	
+    	
     	final JRPdfResource res = new JRPdfResource(reportFile);
     	res.setReportDataSource(new JRBeanCollectionDataSource(customerSalesService.loadAll()));
     	res.setReportParameters(parameters);
     	
     	add(new EmbeddedPdfReport("report", res)); 
+    	
+    	//fileVirtualizer.cleanup();
     }
 }
 
