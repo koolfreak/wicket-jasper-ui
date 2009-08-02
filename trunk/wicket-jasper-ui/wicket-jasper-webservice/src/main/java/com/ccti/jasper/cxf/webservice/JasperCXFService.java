@@ -4,7 +4,6 @@
 package com.ccti.jasper.cxf.webservice;
 
 import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.jws.WebService;
 
 /**
@@ -16,7 +15,7 @@ public interface JasperCXFService
 {
 
     @WebMethod
-    void setUserCredentials(JasperServiceModel model);
+    boolean setUserCredentials(JasperServiceModel model);
 
     @WebMethod
     boolean removeUserCredentials(String reportId);
