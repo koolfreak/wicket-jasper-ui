@@ -111,11 +111,16 @@ public abstract class JRResource extends DynamicWebResource
 	 * servers at will using the factory.
 	 */
 	private transient JasperReport jasperReport;
-
+	
+	/**
+	 * The compiled jasperPrint this resource references. Made transient as we don't
+	 * want our report to be serialized while we can recreate it.
+	 */
+	private transient JasperPrint jasperPrint;
 	/**
 	 * the report parameters.
 	 */
-	private Map reportParameters;
+	private Map<String, Object> reportParameters;
 
 	/**
 	 * the datasource if any for filling this report.
@@ -355,18 +360,20 @@ public abstract class JRResource extends DynamicWebResource
 		{
 			long t1 = System.currentTimeMillis();
 			// get a print instance for exporting
-			JasperPrint print = newJasperPrint();
+			jasperPrint = newJasperPrint();
 
 			// get a fresh instance of an exporter for this report
 			JRAbstractExporter exporter = newExporter();
 
 			// prepare a stream to trap the exporter's output
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
 
 			// execute the export and return the trapped result
-			exporter.exportReport();
+			    exporter.exportReport();
+			
+			
 			final byte[] data = baos.toByteArray();
 			if (log.isDebugEnabled())
 			{
@@ -421,10 +428,13 @@ public abstract class JRResource extends DynamicWebResource
 	 */
 	protected JasperPrint newJasperPrint() throws JRException
 	{
-		final JasperPrint jasperPrint;
+	    	/*final String cache = getCahceDir();
+		
+		fileVirtualizer =   new JRFileVirtualizer(3, cache);*/
 		JasperReport report = getJasperReport();
 		Map params = getReportParameters();
 		JRDataSource dataSource = getReportDataSource();
+		//params.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
 		
 		if (dataSource != null)
 		{
@@ -474,4 +484,6 @@ public abstract class JRResource extends DynamicWebResource
 					+ name + "\"");
 		}
 	}
+	
+	
 }

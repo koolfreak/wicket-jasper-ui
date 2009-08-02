@@ -83,8 +83,8 @@ public final class JRHtmlResource extends JRResource
 	    final JRHtmlExporter htmlexporter =  new JRHtmlExporter();
 	    htmlexporter.setParameter(JRHtmlExporterParameter.HTML_HEADER, "");
 	    htmlexporter.setParameter(JRHtmlExporterParameter.HTML_FOOTER, "");
-	    htmlexporter.setParameter(JRHtmlExporterParameter.IMAGES_URI, "../../servlets/image?image=");
-
+	    htmlexporter.setParameter(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE);
+	    
 	    return htmlexporter;
 	}
 
