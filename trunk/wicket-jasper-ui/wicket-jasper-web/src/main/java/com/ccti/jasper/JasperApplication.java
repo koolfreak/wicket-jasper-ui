@@ -36,7 +36,8 @@ public class JasperApplication extends WebApplication
 	    
 	    	addComponentInstantiationListener(new SpringComponentInjector(this));
 	    	
-		getResourceSettings().setResourcePollFrequency(Duration.ONE_SECOND);
+		//getResourceSettings().setResourcePollFrequency(Duration.ONE_SECOND);
+		getRequestCycleSettings().setGatherExtendedBrowserInfo(true);
 		
 		mount(new QueryStringUrlCodingStrategy("reports", ReportRemoteClassCall.class));
 	}
