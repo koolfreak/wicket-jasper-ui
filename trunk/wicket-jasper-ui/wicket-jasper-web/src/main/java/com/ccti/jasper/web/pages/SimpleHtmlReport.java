@@ -3,6 +3,7 @@ package com.ccti.jasper.web.pages;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRDataSource;
@@ -14,12 +15,15 @@ import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import wicket.contrib.jasperreports.JRPdfResource;
+import wicket.contrib.jasperreports.JRXlsResource;
 import wicket.contrib.jasperreports.link.JRResourceLink;
+import wicket.contrib.jasperreports.link.JRXlsLink;
 import wicket.contrib.jasperreports.paging.JRHtmlDataView;
 
 import com.ccti.jasper.model.customer.CustomerSales;
 import com.ccti.jasper.service.customer.CustomerSalesService;
 import com.ccti.jasper.web.common.JasperIndexPage;
+import com.ccti.jasper.web.pages.error.ReportNotFoundPage;
 import com.ccti.jasper.web.pages.utils.JasperQueryProvider;
 
 
@@ -66,6 +70,9 @@ public class SimpleHtmlReport extends JasperIndexPage
 	    @Override
 	    protected JRDataSource getSource()
 	    {
+		if( getDatas().isEmpty() || getDatas() == null ) {
+		    setResponsePage(ReportNotFoundPage.class);
+		}
 		return new JRBeanCollectionDataSource(getDatas());
 	    }
     	    
@@ -79,6 +86,30 @@ public class SimpleHtmlReport extends JasperIndexPage
 	  pdf.setReportParameters(new HashMap<String, Object>());
 	  
 	  add(new JRResourceLink("pdf", pdf));
+	  
+	  JRXlsResource xls = new JRXlsResource(reportFile);
+	  xls.setReportDataSource(new JRBeanCollectionDataSource(customerSalesService.loadAll()));
+	  xls.setReportParameters(new HashMap<String, Object>());
+	  
+	  add(new JRResourceLink("xls", xls));
+	  
+	  add(new JRXlsLink("test") {
+	    @Override
+	    public JRDataSource getSource()
+	    {
+		return  new JRBeanCollectionDataSource(customerSalesService.loadAll());
+	    }
+	    @Override
+	    public Map<String, Object> getParams()
+	    {
+		return parameters;
+	    }
+	    @Override
+	    public File getReportFile()
+	    {
+		return reportFile;
+	    }
+	  });
     }
 
     @Override
