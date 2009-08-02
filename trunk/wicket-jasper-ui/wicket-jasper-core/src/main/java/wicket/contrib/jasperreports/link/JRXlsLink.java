@@ -3,6 +3,8 @@
  */
 package wicket.contrib.jasperreports.link;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+
 import wicket.contrib.jasperreports.JRXlsResource;
 
 
