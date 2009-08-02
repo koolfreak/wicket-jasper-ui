@@ -3,10 +3,8 @@
  */
 package wicket.contrib.jasperreports.paging;
 
-import java.io.InvalidClassException;
-import java.io.Serializable;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -18,13 +16,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.util.file.File;
 import org.apache.wicket.version.undo.Change;
-
-import wicket.contrib.jasperreports.JRHtmlResource;
-import wicket.contrib.jasperreports.JRResource;
-import wicket.contrib.jasperreports.view.EmbeddedHtmlReport;
 
 
 /**
@@ -44,7 +36,7 @@ public abstract class JRPageable<E> extends JRRepeater implements IPageable
     private int rowsPerPage;
 
     /** The datas to be displayed in the report **/
-    protected final Collection<E> datas;
+    protected List<E> datas;
 
     /**
      * Constructor
@@ -75,7 +67,7 @@ public abstract class JRPageable<E> extends JRRepeater implements IPageable
      *            Number of rows to show on a page
      * @see ListView#ListView(String, List)
      */
-    public JRPageable(final String id, final List list, final int rowsPerPage)
+    public JRPageable(final String id, final List<E> list, final int rowsPerPage)
     {
 	super(id, list);
 	this.rowsPerPage = rowsPerPage;
@@ -301,40 +293,25 @@ public abstract class JRPageable<E> extends JRRepeater implements IPageable
 	}
     }
 
-    protected void displayReport(ListItem item)
-    {
+    protected abstract void displayReport(ListItem item);
+    /*{
 	final JRResource pdfResource = getPdfResource();
 	item.add(new EmbeddedHtmlReport("report", pdfResource));
 	log.debug("finish exporting the report...");
-    }
+    }*/
 
-    private JRDataSource getSource()
-    {
-	try
-	{
-	    return new JRSerializeBeanDataSource(getDatas());
-	}
-	catch (InvalidClassException e)
-	{
-	    e.printStackTrace();
-	}
-	return null;//throw new WicketRuntimeException("Oppsss there is an error...please refresh the page");
-    }
-
-    protected JRResource getPdfResource()
-    {
-	return new JRHtmlResource(getReportFile()).setReportParameters(getParameter())
-	.setReportDataSource(getSource());
-    }
+   
 
     /**
 	 * @return
 	 * @uml.property  name="datas"
 	 */
-    public Collection getDatas()
+    public List<E> getDatas()
     {
 	return datas;
     }
+
+    protected abstract JRDataSource getSource(); 
 
     protected abstract File getReportFile();
 
