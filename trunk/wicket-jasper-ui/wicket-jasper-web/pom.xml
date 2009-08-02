@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>com.ccti.jasper</groupId>
 			<artifactId>wicket-jasper-core</artifactId>
-			<version>1.4.0</version>
+			<version>1.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.ccti</groupId>
