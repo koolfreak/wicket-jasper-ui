@@ -9,10 +9,12 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import ar.com.fdvs.dj.core.layout.LayoutManager;
+import ar.com.fdvs.dj.domain.Style;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilder;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilderException;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
-import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
+import ar.com.fdvs.dj.domain.constants.HorizontalAlign;
 
 
 /**
@@ -32,7 +34,9 @@ public abstract class DJReportBase implements Serializable
     
     public abstract void initilizeBuilder(DynamicReportBuilder reportBuilder);
     
-    protected abstract String getDynamicReportName();
+    public abstract String getDynamicReportName();
+    
+    public abstract LayoutManager getReportLayout();
 
     public DynamicReportBuilder getReportBuilder()
     {
@@ -47,6 +51,7 @@ public abstract class DJReportBase implements Serializable
     public void addReportColumns(List<String> props, Class<?> clazz)
     {
 	final Field[] fields = clazz.getDeclaredFields();
+	
 
 	for (String selprop : props)
 	{
@@ -66,7 +71,7 @@ public abstract class DJReportBase implements Serializable
 
 		    try
 		    {
-			reportBuilder.addColumn(djcolumn.build());
+			getReportBuilder().addColumn(djcolumn.build());
 		    } 
 		    catch (ColumnBuilderException e)
 		    {
