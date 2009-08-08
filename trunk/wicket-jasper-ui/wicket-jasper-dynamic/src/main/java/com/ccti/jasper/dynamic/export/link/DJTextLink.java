@@ -11,15 +11,16 @@ import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 
 import com.ccti.jasper.dynamic.DJPdfResource;
 import com.ccti.jasper.dynamic.DJResource;
+import com.ccti.jasper.dynamic.DJTextResource;
 
 /**
  * @author Emmanuel Nollase - emanux
  * created 2009 8 8 - 21:12:39
  */
-public abstract class DJPdfLink extends JRResourceExportLink
+public abstract class DJTextLink extends JRResourceExportLink
 {
 
-    public DJPdfLink(String id)
+    public DJTextLink(String id)
     {
 	super(id);
     }
@@ -30,15 +31,15 @@ public abstract class DJPdfLink extends JRResourceExportLink
     @Override
     public void onClick()
     {
-	final DJResource pdf = new DJPdfResource();
-	pdf.setReportDataSource(getSource());
-	pdf.setReportParameters(getParams());
-	final String pdfname = getDynamicReportName()+"."+pdf.getExtension();
-	pdf.setFileName(pdfname);
-	pdf.setLayoutManager(getLayoutManager());
-	pdf.setReportBuilder(getReportBuilder());
+	final DJResource txt = new DJTextResource();
+	txt.setReportDataSource(getSource());
+	txt.setReportParameters(getParams());
+	final String txtname = getDynamicReportName()+"."+txt.getExtension();
+	txt.setFileName(txtname);
+	txt.setLayoutManager(getLayoutManager());
+	txt.setReportBuilder(getReportBuilder());
 
-	pdf.onResourceRequested();
+	txt.onResourceRequested();
     }
 
     public File getReportFile()

@@ -9,17 +9,17 @@ import wicket.contrib.jasperreports.link.JRResourceExportLink;
 import ar.com.fdvs.dj.core.layout.LayoutManager;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 
-import com.ccti.jasper.dynamic.DJPdfResource;
 import com.ccti.jasper.dynamic.DJResource;
+import com.ccti.jasper.dynamic.DJRtfResource;
 
 /**
  * @author Emmanuel Nollase - emanux
  * created 2009 8 8 - 21:12:39
  */
-public abstract class DJPdfLink extends JRResourceExportLink
+public abstract class DJRtfLink extends JRResourceExportLink
 {
 
-    public DJPdfLink(String id)
+    public DJRtfLink(String id)
     {
 	super(id);
     }
@@ -30,15 +30,15 @@ public abstract class DJPdfLink extends JRResourceExportLink
     @Override
     public void onClick()
     {
-	final DJResource pdf = new DJPdfResource();
-	pdf.setReportDataSource(getSource());
-	pdf.setReportParameters(getParams());
-	final String pdfname = getDynamicReportName()+"."+pdf.getExtension();
-	pdf.setFileName(pdfname);
-	pdf.setLayoutManager(getLayoutManager());
-	pdf.setReportBuilder(getReportBuilder());
+	final DJResource rtf = new DJRtfResource();
+	rtf.setReportDataSource(getSource());
+	rtf.setReportParameters(getParams());
+	final String rtfname = getDynamicReportName()+"."+rtf.getExtension();
+	rtf.setFileName(rtfname);
+	rtf.setLayoutManager(getLayoutManager());
+	rtf.setReportBuilder(getReportBuilder());
 
-	pdf.onResourceRequested();
+	rtf.onResourceRequested();
     }
 
     public File getReportFile()
