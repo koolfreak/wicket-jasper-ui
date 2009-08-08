@@ -10,11 +10,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import ar.com.fdvs.dj.core.layout.LayoutManager;
-import ar.com.fdvs.dj.domain.Style;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilder;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilderException;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
-import ar.com.fdvs.dj.domain.constants.HorizontalAlign;
 
 
 /**
@@ -28,11 +26,10 @@ public abstract class DJReportBase implements Serializable
     
     public DJReportBase()
     {
-	reportBuilder = new FastDynamicReportBuilder();
-	initilizeBuilder(reportBuilder);
+	initilizeBuilder();
     }
     
-    public abstract void initilizeBuilder(DynamicReportBuilder reportBuilder);
+    public abstract void initilizeBuilder();
     
     public abstract String getDynamicReportName();
     
