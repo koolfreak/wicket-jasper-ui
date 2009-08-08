@@ -27,9 +27,6 @@ public abstract class DJPdfPageable <E> extends JRPageable<E>
 
     private static final Log log = LogFactory.getLog(DJPdfPageable.class);
     
-    private transient EmbeddedPdfReport embeddedPdfReport;
-    private transient DJPdfResource dynamicJRPdfResource;
-    
     /**
      * 
      * @param id
@@ -55,14 +52,13 @@ public abstract class DJPdfPageable <E> extends JRPageable<E>
     @Override
     protected void displayReport(ListItem item)
     {
-	embeddedPdfReport = new EmbeddedPdfReport("report", getPdfResource());
-	item.add(embeddedPdfReport);
+	item.add(new EmbeddedPdfReport("report", getPdfResource()));
 	log.info("Finish exporting [PDF] report...");
     }
 
     protected DJPdfResource getPdfResource()
     {
-	dynamicJRPdfResource = new DJPdfResource();
+	final DJPdfResource dynamicJRPdfResource = new DJPdfResource();
 	dynamicJRPdfResource.setReportParameters(getParameter());
 	dynamicJRPdfResource.setReportDataSource(getSource());
 	dynamicJRPdfResource.setReportBuilder(getReportBuilder());
