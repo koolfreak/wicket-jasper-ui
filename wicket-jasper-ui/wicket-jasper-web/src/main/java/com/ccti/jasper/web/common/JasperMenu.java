@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import com.ccti.jasper.web.pages.SimpleHtmlBarcodeReport;
 import com.ccti.jasper.web.pages.SimpleHtmlReport;
 import com.ccti.jasper.web.pages.SimplePdfReport;
+import com.ccti.jasper.web.pages.dynamic.TestDynamicFilter;
 
 
 /**
@@ -46,6 +47,15 @@ public class JasperMenu extends Panel
 	    }
 	});
 	
+	add(new Link("dynamic")
+	{
+	    
+	    @Override
+	    public void onClick()
+	    {
+		setResponsePage(TestDynamicFilter.class);
+	    }
+	});
     }
 }
 
