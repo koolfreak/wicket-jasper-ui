@@ -12,6 +12,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import wicket.contrib.jasperreports.JRResource;
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
+import ar.com.fdvs.dj.core.layout.LayoutManager;
 import ar.com.fdvs.dj.domain.DynamicReport;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 
@@ -23,6 +24,8 @@ import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 public abstract class DJResource extends JRResource
 {
     protected DynamicReportBuilder reportBuilder;
+    
+    protected LayoutManager layoutManager;
 
     public DJResource()
     {
@@ -48,7 +51,7 @@ public abstract class DJResource extends JRResource
     protected JasperPrint newJasperPrint() throws JRException
     {
 	
-	return  DynamicJasperHelper.generateJasperPrint(getDynamicReport(), new ClassicLayoutManager(), getReportDataSource(), getReportParameters());
+	return  DynamicJasperHelper.generateJasperPrint(getDynamicReport(), getLayoutManager(), getReportDataSource(), getReportParameters());
 	
     }
 
@@ -56,7 +59,7 @@ public abstract class DJResource extends JRResource
     {
         return getReportBuilder().build();
     }
-
+    
     public DynamicReportBuilder getReportBuilder()
     {
         return reportBuilder;
@@ -67,4 +70,14 @@ public abstract class DJResource extends JRResource
         this.reportBuilder = reportBuilder;
     }
 
+    public LayoutManager getLayoutManager()
+    {
+        return layoutManager;
+    }
+
+    public void setLayoutManager(LayoutManager layoutManager)
+    {
+        this.layoutManager = layoutManager;
+    }
+    
 }

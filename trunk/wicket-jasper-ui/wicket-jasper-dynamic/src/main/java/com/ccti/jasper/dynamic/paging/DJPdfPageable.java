@@ -13,6 +13,7 @@ import org.apache.wicket.model.IModel;
 
 import wicket.contrib.jasperreports.paging.JRPageable;
 import wicket.contrib.jasperreports.view.EmbeddedPdfReport;
+import ar.com.fdvs.dj.core.layout.LayoutManager;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 
 import com.ccti.jasper.dynamic.DJPdfResource;
@@ -67,6 +68,7 @@ public abstract class DJPdfPageable <E> extends JRPageable<E>
 	dynamicJRPdfResource.setReportBuilder(getReportBuilder());
 	final String filename = getDynamicReportName() +"."+ dynamicJRPdfResource.getExtension();
 	dynamicJRPdfResource.setFileName(filename);
+	dynamicJRPdfResource.setLayoutManager(getLayoutManager());
 	return dynamicJRPdfResource;
     }
     
@@ -78,5 +80,7 @@ public abstract class DJPdfPageable <E> extends JRPageable<E>
     protected abstract DynamicReportBuilder getReportBuilder();
     
     protected abstract String getDynamicReportName();
+    
+    protected abstract LayoutManager getLayoutManager();
    
 }

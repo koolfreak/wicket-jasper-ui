@@ -7,7 +7,11 @@ import java.io.File;
 
 import wicket.contrib.jasperreports.link.JRResourceExportLink;
 
+import ar.com.fdvs.dj.core.layout.LayoutManager;
+import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
+
 import com.ccti.jasper.dynamic.DJPdfResource;
+import com.ccti.jasper.dynamic.DJResource;
 
 /**
  * @author Emmanuel Nollase - emanux
@@ -27,11 +31,13 @@ public abstract class DJPdfLink extends JRResourceExportLink
     @Override
     public void onClick()
     {
-	DJPdfResource pdf = new DJPdfResource();
+	DJResource pdf = new DJPdfResource();
 	pdf.setReportDataSource(getSource());
 	pdf.setReportParameters(getParams());
 	final String pdfname = getDynamicReportName()+"."+pdf.getExtension();
 	pdf.setFileName(pdfname);
+	pdf.setLayoutManager(getLayoutManager());
+	pdf.setReportBuilder(getReportBuilder());
 
 	pdf.onResourceRequested();
     }
@@ -42,4 +48,8 @@ public abstract class DJPdfLink extends JRResourceExportLink
     }
     
     protected abstract String getDynamicReportName();
+    
+    protected abstract LayoutManager getLayoutManager();
+    
+    protected abstract DynamicReportBuilder getReportBuilder();
 }
