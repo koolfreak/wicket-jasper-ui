@@ -21,8 +21,6 @@ public abstract class JRHtmlPageable<E> extends JRPageable<E>
 {
     private static final Log log = LogFactory.getLog(JRHtmlPageable.class);
 
-    private transient JRHtmlResource htmlResource;
-
     public JRHtmlPageable(String id, IModel model, int rowsPerPage)
     {
 	super(id, model, rowsPerPage);
@@ -43,7 +41,7 @@ public abstract class JRHtmlPageable<E> extends JRPageable<E>
 
     protected JRResource getHtmlResource()
     {
-	htmlResource = new JRHtmlResource(getReportFile());
+	final JRHtmlResource htmlResource = new JRHtmlResource(getReportFile());
 	htmlResource.setReportParameters(getParameter());
 	htmlResource.setReportDataSource(getSource());
 	return htmlResource;

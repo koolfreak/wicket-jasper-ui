@@ -23,8 +23,6 @@ public abstract class JRPdfPageable<E> extends JRPageable<E>
 
     private static final Log log = LogFactory.getLog(JRPdfPageable.class);
 
-    private transient JRPdfResource pdfResource;
-
     /**
      * Constructor
      * 
@@ -68,7 +66,7 @@ public abstract class JRPdfPageable<E> extends JRPageable<E>
 
     protected JRResource getPdfResource()
     {
-	pdfResource = new JRPdfResource(getReportFile());
+	final JRPdfResource pdfResource = new JRPdfResource(getReportFile());
 	pdfResource.setReportParameters(getParameter());
 	pdfResource.setReportDataSource(getSource());
 	return pdfResource;
