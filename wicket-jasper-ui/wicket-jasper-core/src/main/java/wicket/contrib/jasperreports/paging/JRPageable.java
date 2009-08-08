@@ -294,13 +294,6 @@ public abstract class JRPageable<E> extends JRRepeater implements IPageable
     }
 
     protected abstract void displayReport(ListItem item);
-    /*{
-	final JRResource pdfResource = getPdfResource();
-	item.add(new EmbeddedHtmlReport("report", pdfResource));
-	log.debug("finish exporting the report...");
-    }*/
-
-   
 
     /**
 	 * @return
