@@ -78,7 +78,6 @@ public abstract class JRDataViewBase extends JRRepeater implements IPageable
 
     public final int getDataSize()
     {
-	// return dataProvider.size();
 	return dataSize;
     }
 

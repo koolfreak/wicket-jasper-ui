@@ -25,18 +25,13 @@ import wicket.contrib.jasperreports.view.EmbeddedHtmlReport;
  * @author Emmannuel A. Nollase
  * Created: Jan 22, 2009 - 12:44:37 PM
  */
-public abstract class JRHtmlDataView<E> extends JRDataViewBase
+public abstract class JRHtmlDataView<E> extends JRDataView<E>
 {
     public static final Log log = LogFactory.getLog(JRHtmlDataView.class);
 
     /** Datas to be rendered by JasperReports **/
     private List<E> datas;
     
-    /** A type of report to be displayed **/
-    transient EmbeddedHtmlReport embeddedHtmlReport;
-    
-    transient JRHtmlResource htmlResource;
-
     private static final long serialVersionUID = 1L;
 
     /**
@@ -103,14 +98,13 @@ public abstract class JRHtmlDataView<E> extends JRDataViewBase
      */
     protected void displayReport(ListItem item) 
     {
-	embeddedHtmlReport = new EmbeddedHtmlReport("report", getHtmlResource());
-	item.add(embeddedHtmlReport);
+	item.add(new EmbeddedHtmlReport("report", getHtmlResource()));
 	log.debug("finish exporting the report...");
     }
 
     protected JRResource getHtmlResource() 
     {
-	htmlResource = new JRHtmlResource(getReportFile());
+	final JRHtmlResource htmlResource = new JRHtmlResource(getReportFile());
 	htmlResource.setReportParameters(getParameter());
 	htmlResource.setReportDataSource(getSource());
 	return htmlResource;
