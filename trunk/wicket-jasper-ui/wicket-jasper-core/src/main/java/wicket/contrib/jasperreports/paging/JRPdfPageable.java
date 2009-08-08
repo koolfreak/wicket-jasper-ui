@@ -16,62 +16,62 @@ import wicket.contrib.jasperreports.JRResource;
 import wicket.contrib.jasperreports.view.EmbeddedPdfReport;
 
 /**
- * @author Emmanuel Nollase - emanux
- * created: Jul 9, 2009 - 4:03:20 PM
+ * @author Emmanuel Nollase - emanux created: Jul 9, 2009 - 4:03:20 PM
  */
-public abstract class JRPdfPageable<E> extends JRPageable<E> 
+public abstract class JRPdfPageable<E> extends JRPageable<E>
 {
 
-	 private static final Log log = LogFactory.getLog(JRPageable.class);
+    private static final Log log = LogFactory.getLog(JRPdfPageable.class);
 
-	 private transient EmbeddedPdfReport embeddedPdfReport;
-	 private transient JRPdfResource pdfResource;
-	    /**
-	     * Constructor
-	     * 
-	     * @param id
-	     *            See Component
-	     * @param model
-	     *            See Component
-	     * @param rowsPerPage
-	     *            Number of rows to show on a page
-	     */
-	    public JRPdfPageable(final String id, final IModel model,final int rowsPerPage)
-	    {
-	    	super(id, model,rowsPerPage);
-	    }
+    private transient JRPdfResource pdfResource;
 
-	    /**
-	     * Creates a pageable list view having the given number of rows per page
-	     * that uses the provided object as a simple model.
-	     * 
-	     * @param id
-	     *            See Component
-	     * @param list
-	     *            See Component
-	     * @param rowsPerPage
-	     *            Number of rows to show on a page
-	     * @see ListView#ListView(String, List)
-	     */
-	    public JRPdfPageable(final String id, final List<E> list, final int rowsPerPage)
-	    {
-	    	super(id, list,rowsPerPage);
-	    }
+    /**
+     * Constructor
+     * 
+     * @param id
+     *            See Component
+     * @param model
+     *            See Component
+     * @param rowsPerPage
+     *            Number of rows to show on a page
+     */
+    public JRPdfPageable(final String id, final IModel model,
+	    final int rowsPerPage)
+    {
+	super(id, model, rowsPerPage);
+    }
 
-		@Override
-		protected void displayReport(ListItem item) 
-		{
-			embeddedPdfReport = new EmbeddedPdfReport("report", getPdfResource());
-			item.add(embeddedPdfReport);
-			log.info("Finish exporting [PDF] report...");
-		}
+    /**
+     * Creates a pageable list view having the given number of rows per page
+     * that uses the provided object as a simple model.
+     * 
+     * @param id
+     *            See Component
+     * @param list
+     *            See Component
+     * @param rowsPerPage
+     *            Number of rows to show on a page
+     * @see ListView#ListView(String, List)
+     */
+    public JRPdfPageable(final String id, final List<E> list,
+	    final int rowsPerPage)
+    {
+	super(id, list, rowsPerPage);
+    }
 
-		protected JRResource getPdfResource() 
-	    {
-			pdfResource = new JRPdfResource(getReportFile());
-			pdfResource.setReportParameters(getParameter());
-			pdfResource.setReportDataSource(getSource());
-			return pdfResource;
-	    }
-	    
+    @Override
+    protected void displayReport(ListItem item)
+    {
+	item.add(new EmbeddedPdfReport("report", getPdfResource()));
+	log.info("Finish exporting [PDF] report...");
+    }
+
+    protected JRResource getPdfResource()
+    {
+	pdfResource = new JRPdfResource(getReportFile());
+	pdfResource.setReportParameters(getParameter());
+	pdfResource.setReportDataSource(getSource());
+	return pdfResource;
+    }
+
 }
