@@ -4,13 +4,14 @@
 package com.ccti.jasper.dynamic.export.link;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import wicket.contrib.jasperreports.link.JRResourceExportLink;
 import ar.com.fdvs.dj.core.layout.LayoutManager;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 
 import com.ccti.jasper.dynamic.DJCsvResource;
-import com.ccti.jasper.dynamic.DJPdfResource;
 import com.ccti.jasper.dynamic.DJResource;
 
 /**
@@ -45,6 +46,11 @@ public abstract class DJCsvLink extends JRResourceExportLink
     public File getReportFile()
     {
 	return null;
+    }
+    
+    public Map<String, Object> getParams()
+    {
+	return new HashMap<String, Object>();
     }
     
     protected abstract String getDynamicReportName();
