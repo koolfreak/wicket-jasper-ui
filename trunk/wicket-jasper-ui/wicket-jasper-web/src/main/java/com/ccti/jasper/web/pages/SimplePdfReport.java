@@ -33,16 +33,7 @@ public class SimplePdfReport extends JasperIndexPage
     {
 	final File reportFile = new File(getContext().getRealPath("/reports/customer_sales_report.jasper"));
     	
-	final String cache = "c:\\jaspercache";
-	
-	/*log.info("jasper cache = "+cache);
-	final JRFileVirtualizer fileVirtualizer =
-	    new JRFileVirtualizer(3, cache);*/
-
-	
 	final Map<String, Object> parameters = new HashMap<String, Object>();
-    	//parameters.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
-    	
     	
     	final JRPdfResource res = new JRPdfResource(reportFile);
     	res.setReportDataSource(new JRBeanCollectionDataSource(customerSalesService.loadAll()));
@@ -50,7 +41,6 @@ public class SimplePdfReport extends JasperIndexPage
     	
     	add(new EmbeddedPdfReport("report", res)); 
     	
-    	//fileVirtualizer.cleanup();
     }
 }
 
