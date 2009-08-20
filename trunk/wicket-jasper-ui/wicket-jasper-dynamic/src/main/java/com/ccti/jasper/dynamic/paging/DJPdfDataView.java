@@ -5,15 +5,16 @@ package com.ccti.jasper.dynamic.paging;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import net.sf.jasperreports.engine.JRDataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.markup.repeater.data.IDataProvider;
 
-import wicket.contrib.jasperreports.paging.JRPageable;
+import wicket.contrib.jasperreports.paging.JRDataView;
 import wicket.contrib.jasperreports.view.EmbeddedPdfReport;
 import ar.com.fdvs.dj.core.layout.LayoutManager;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
@@ -22,42 +23,31 @@ import com.ccti.jasper.dynamic.DJPdfResource;
 
 /**
  * @author Emmanuel Nollase - emanux
- * created 2009 8 6 - 18:18:42
+ * created 2009 8 20 - 12:05:29
  */
-public abstract class DJPdfPageable <E> extends JRPageable<E>
+public abstract class DJPdfDataView<E> extends JRDataView<E>
 {
 
-    private static final Log log = LogFactory.getLog(DJPdfPageable.class);
+    private static final Log log = LogFactory.getLog(DJPdfDataView.class);
     
     /**
      * 
-     * @param id
-     * @param model
-     * @param rowsPerPage
      */
-    public DJPdfPageable(String id, IModel model, int rowsPerPage)
+    public DJPdfDataView(String id, IDataProvider dataProvider, int itemsPerPage)
     {
-	super(id, model, rowsPerPage);
-    }
-    
-    /**
-     * 
-     * @param id
-     * @param list
-     * @param rowsPerPage
-     */
-    public DJPdfPageable(final String id, final List<E> list, final int rowsPerPage)
-    {
-    	super(id, list,rowsPerPage);
+	super(id, dataProvider, itemsPerPage);
     }
 
+    /* (non-Javadoc)
+     * @see wicket.contrib.jasperreports.paging.JRDataView#displayReport(org.apache.wicket.markup.html.list.ListItem)
+     */
     @Override
     protected void displayReport(ListItem item)
     {
 	item.add(new EmbeddedPdfReport("report", getPdfResource()));
 	log.info("Finish exporting [PDF] report...");
     }
-
+    
     protected DJPdfResource getPdfResource()
     {
 	final DJPdfResource dynamicJRPdfResource = new DJPdfResource();
@@ -80,10 +70,12 @@ public abstract class DJPdfPageable <E> extends JRPageable<E>
 	return new HashMap<String, Object>();
     }
     
+    protected abstract JRDataSource getSource();
+    
     protected abstract DynamicReportBuilder getReportBuilder();
     
     protected abstract String getDynamicReportName();
     
     protected abstract LayoutManager getLayoutManager();
-   
+
 }
