@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
 import org.apache.wicket.markup.html.basic.Label;
@@ -47,7 +48,7 @@ public class TestDynamicFilter extends JasperIndexPage
 	    protected void populateItem(ListItem item)
 	    {
 		item.add(new Check("sel",item.getModel()));
-		item.add(new Label("prop",item.getModelObjectAsString()));
+		item.add(new Label("prop",StringUtils.capitalize(item.getModelObjectAsString())) );
 	    }
 	};
 	

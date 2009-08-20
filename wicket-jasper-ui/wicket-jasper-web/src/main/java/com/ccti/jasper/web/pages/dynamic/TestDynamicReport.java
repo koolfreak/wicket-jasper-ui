@@ -3,9 +3,7 @@
  */
 package com.ccti.jasper.web.pages.dynamic;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -38,16 +36,12 @@ public class TestDynamicReport extends JasperIndexPage
 	dyrpt.addReportColumns(prop,CustomerSales.class);
 	
 	final DJPdfPageable<CustomerSales> pageable = new DJPdfPageable<CustomerSales>("dyrpt",salesService.loadAll(1,500),100)
+	//final DJHtmlPageable<CustomerSales> pageable = new DJHtmlPageable<CustomerSales>("dyrpt",salesService.loadAll(1,500),100)
 	{
 	    @Override
 	    protected JRDataSource getSource()
 	    {
 		return new JRBeanCollectionDataSource(getDatas());
-	    }
-	    @Override
-	    protected Map<String, Object> getParameter()
-	    {
-		return new HashMap<String, Object>();
 	    }
 	    @Override
 	    protected DynamicReportBuilder getReportBuilder()
@@ -59,7 +53,6 @@ public class TestDynamicReport extends JasperIndexPage
 	    {
 		return dyrpt.getDynamicReportName();
 	    }
-
 	    @Override
 	    protected LayoutManager getLayoutManager()
 	    {
@@ -82,16 +75,10 @@ public class TestDynamicReport extends JasperIndexPage
 	    {
 		return dyrpt.getDynamicReportName();
 	    }
-
 	    @Override
 	    protected LayoutManager getLayoutManager()
 	    {
 		return dyrpt.getReportLayout();
-	    }
-	    @Override
-	    public Map<String, Object> getParams()
-	    {
-		return new HashMap<String, Object>();
 	    }
 	    @Override
 	    public JRDataSource getSource()

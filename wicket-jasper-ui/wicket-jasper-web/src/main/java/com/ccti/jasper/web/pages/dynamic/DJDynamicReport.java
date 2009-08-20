@@ -8,9 +8,9 @@ import java.util.Date;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.core.layout.LayoutManager;
 import ar.com.fdvs.dj.domain.AutoText;
-import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 
 import com.ccti.jasper.dynamic.core.DJReportBase;
+import com.ccti.jasper.dynamic.core.SerializableDynamicReportBuilder;
 
 /**
  * @author Emmanuel Nollase - emanux 
@@ -28,10 +28,11 @@ public class DJDynamicReport extends DJReportBase
      * .dj.domain.builders.DynamicReportBuilder)
      */
     @Override
-    public void initilizeBuilder(DynamicReportBuilder reportBuilder)
+    public void initilizeBuilder()
     {
+	reportBuilder = new SerializableDynamicReportBuilder();
 	reportBuilder.setTitle("Testing Dynamic report");
-	//reportBuilder.setSubtitle("This report was generated: " + new Date());
+	reportBuilder.setSubtitle("This report was generated: " + new Date());
 	reportBuilder.setPrintBackgroundOnOddRows(true);
 	reportBuilder.setUseFullPageWidth(true);
 	
