@@ -10,7 +10,6 @@ import java.net.URL;
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.export.JRHtmlExporter;
 import net.sf.jasperreports.engine.export.JRHtmlExporterParameter;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 /**
  * @author Emmanuel Nollase - emanux created 2009 8 6 - 13:04:47
@@ -50,11 +49,11 @@ public final class DJHtmlResource extends DJResource
 
     protected JRAbstractExporter newExporter()
     {
-	final JRHtmlExporter htmlexporter = new JRHtmlExporter();
-	htmlexporter.setParameter(JRHtmlExporterParameter.HTML_HEADER, "");
+	return new JRHtmlExporter();
+	/*htmlexporter.setParameter(JRHtmlExporterParameter.HTML_HEADER, "");
 	htmlexporter.setParameter(JRHtmlExporterParameter.HTML_FOOTER, "");
-	htmlexporter.setParameter(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN,Boolean.FALSE);
-	return htmlexporter;
+	htmlexporter.setParameter(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN,Boolean.FALSE);*/
+	//return htmlexporter;
     }
 
 }
