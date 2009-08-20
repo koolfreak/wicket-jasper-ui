@@ -36,7 +36,7 @@ public abstract class JRPageable<E> extends JRRepeater implements IPageable
     private int rowsPerPage;
 
     /** The datas to be displayed in the report **/
-    protected List<E> datas;
+    private List<E> datas;
 
     /**
      * Constructor

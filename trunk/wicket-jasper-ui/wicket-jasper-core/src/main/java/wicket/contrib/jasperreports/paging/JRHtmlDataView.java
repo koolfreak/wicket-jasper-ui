@@ -5,7 +5,6 @@ package wicket.contrib.jasperreports.paging;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,9 +28,6 @@ public abstract class JRHtmlDataView<E> extends JRDataView<E>
 {
     public static final Log log = LogFactory.getLog(JRHtmlDataView.class);
 
-    /** Datas to be rendered by JasperReports **/
-    private List<E> datas;
-    
     private static final long serialVersionUID = 1L;
 
     /**
@@ -45,53 +41,8 @@ public abstract class JRHtmlDataView<E> extends JRDataView<E>
     public JRHtmlDataView(String id, IDataProvider dataProvider, int itemsPerPage)
     {
 	super(id, dataProvider, itemsPerPage);
-	this.datas = new ArrayList<E>();
     }
 
-    
-    @Override
-    protected final void onPopulate()
-    {
-	// Get number of items to be displayed
-	final int size = getDataViewSize();
-	if (size > 0)
-	{
-
-	    // reset previously stored data in the collection
-	    datas.clear();
-	    // Automatically rebuild all ListItems before rendering the list
-	    // view
-	    removeAll();
-
-	    //boolean hasChildren = size() != 0;
-	    ListItem item = null;
-	    Iterator<E> data = getDataProvider().iterator(firstIndex, size);
-	    while (data.hasNext())
-	    {
-		datas.add(data.next());
-	    }
-
-	    /*if (hasChildren)
-	    {
-		// If this component does not already exist, populate it
-		 //item = (ListItem) get(Integer.toString(index));
-	    }*/
-	    if (item == null)
-	    {
-		// Create item for index
-		item = newItem(firstIndex);
-		// Add list item
-		add(item);
-	    }
-	   
-	    displayReport(item);
-	}
-	else
-	{
-	    removeAll();
-	}
-
-    }
     
     /**
      * @param item - displays the report
@@ -110,28 +61,11 @@ public abstract class JRHtmlDataView<E> extends JRDataView<E>
 	return htmlResource;
     }
 
-    /**
-     * @return
-     * @uml.property  name="datas"
-     */
-    public List<E> getDatas()
-    {
-	return datas;
-    }
     
-    /**
-     * @return JaspertReport DataSource
-     */
     protected abstract JRDataSource getSource(); 
     
-    /**
-     * @return JasperReport File
-     */
     protected abstract File getReportFile();
     
-    /**
-     * @return JasperReport Parameter
-     */
     protected abstract Map<String, Object> getParameter();
    
 }
