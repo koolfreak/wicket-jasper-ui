@@ -6,12 +6,14 @@ package com.ccti.jasper.dynamic;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperPrint;
 import wicket.contrib.jasperreports.JRResource;
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
-import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.core.layout.LayoutManager;
 import ar.com.fdvs.dj.domain.DynamicReport;
 import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
@@ -50,8 +52,10 @@ public abstract class DJResource extends JRResource
     @Override
     protected JasperPrint newJasperPrint() throws JRException
     {
+	final Map<String, Object> param = new HashMap<String, Object>();
+	param.put(JRParameter.REPORT_VIRTUALIZER, getFileVirtualizer());
 	
-	return  DynamicJasperHelper.generateJasperPrint(getDynamicReport(), getLayoutManager(), getReportDataSource(), getReportParameters());
+	return  DynamicJasperHelper.generateJasperPrint(getDynamicReport(), getLayoutManager(), getReportDataSource(), param);
 	
     }
 
