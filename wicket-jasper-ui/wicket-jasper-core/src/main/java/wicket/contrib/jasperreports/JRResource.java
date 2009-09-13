@@ -1,6 +1,7 @@
 /*
- * $Id: JRResource.java 3360 2007-12-13 08:57:29Z lm61 $ $Revision:
- * 1.4 $ $Date: 2007-12-13 16:57:29 +0800 (Thu, 13 Dec 2007) $
+ * $Id: JRResource.java 3360 2007-12-13 08:57:29Z lm61 $ $Revision: 1.4 $ $Date:
+ * 2007-12-13 16:57:29 +0800 (Thu, 13 Dec 2007) $
+ * 
  * 
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -24,15 +25,19 @@ import java.io.Serializable;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.base.JRVirtualPrintPage;
+import net.sf.jasperreports.engine.fill.JRFileVirtualizer;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.apache.commons.logging.Log;
@@ -44,12 +49,13 @@ import org.apache.wicket.protocol.http.WebResponse;
 
 /**
  * Base class for jasper reports resources.
- * @author  Eelco Hillenius
- * @author  Matej Knopp
- * @author  Luciano Montebove
+ * 
+ * @author Eelco Hillenius
+ * @author Matej Knopp
+ * @author Luciano Montebove
  */
-public abstract class JRResource extends DynamicWebResource
-{
+public abstract class JRResource extends DynamicWebResource {
+
 	/**
 	 * logger.
 	 */
@@ -58,8 +64,8 @@ public abstract class JRResource extends DynamicWebResource
 	/**
 	 * Provides JDBC connection.
 	 */
-	public static interface IDatabaseConnectionProvider extends Serializable
-	{
+	public static interface IDatabaseConnectionProvider extends Serializable {
+
 		/**
 		 * Gets a JDBC connection to use when filling the report.
 		 * 
@@ -77,8 +83,8 @@ public abstract class JRResource extends DynamicWebResource
 	/**
 	 * Factory class for lazy initialization of the jasper report.
 	 */
-	private static interface JasperReportFactory extends Serializable
-	{
+	private static interface JasperReportFactory extends Serializable {
+
 		/**
 		 * Create a jasper report instance.
 		 * 
@@ -93,15 +99,17 @@ public abstract class JRResource extends DynamicWebResource
 
 	/**
 	 * the connection provider if any for filling this report.
-	 * @uml.property  name="connectionProvider"
-	 * @uml.associationEnd  
+	 * 
+	 * @uml.property name="connectionProvider"
+	 * @uml.associationEnd
 	 */
 	private IDatabaseConnectionProvider connectionProvider;
 
 	/**
 	 * factory for delayed report creation.
-	 * @uml.property  name="jasperReportFactory"
-	 * @uml.associationEnd  
+	 * 
+	 * @uml.property name="jasperReportFactory"
+	 * @uml.associationEnd
 	 */
 	private JasperReportFactory jasperReportFactory;
 
@@ -111,12 +119,18 @@ public abstract class JRResource extends DynamicWebResource
 	 * servers at will using the factory.
 	 */
 	private transient JasperReport jasperReport;
-	
+
 	/**
-	 * The compiled jasperPrint this resource references. Made transient as we don't
-	 * want our report to be serialized while we can recreate it.
+	 * The report cache used.
+	 */
+	private JRFileVirtualizer fileVirtualizer;
+
+	/**
+	 * The compiled jasperPrint this resource references. Made transient as we
+	 * don't want our report to be serialized while we can recreate it.
 	 */
 	private transient JasperPrint jasperPrint;
+
 	/**
 	 * the report parameters.
 	 */
@@ -139,8 +153,7 @@ public abstract class JRResource extends DynamicWebResource
 	 * Construct without a report. You must provide a report before you can use
 	 * this resource.
 	 */
-	public JRResource()
-	{
+	public JRResource() {
 		super();
 		setCacheable(false);
 	}
@@ -151,12 +164,10 @@ public abstract class JRResource extends DynamicWebResource
 	 * @param report
 	 *            the report input stream
 	 */
-	public JRResource(final InputStream report)
-	{
-		this(new JasperReportFactory()
-		{
-			public JasperReport newJasperReport() throws JRException
-			{
+	public JRResource(final InputStream report) {
+		this(new JasperReportFactory() {
+
+			public JasperReport newJasperReport() throws JRException {
 				return (JasperReport) JRLoader.loadObject(report);
 			}
 
@@ -170,12 +181,10 @@ public abstract class JRResource extends DynamicWebResource
 	 * @param report
 	 *            the report input stream
 	 */
-	public JRResource(final URL report)
-	{
-		this(new JasperReportFactory()
-		{
-			public JasperReport newJasperReport() throws JRException
-			{
+	public JRResource(final URL report) {
+		this(new JasperReportFactory() {
+
+			public JasperReport newJasperReport() throws JRException {
 				return (JasperReport) JRLoader.loadObject(report);
 			}
 
@@ -189,12 +198,10 @@ public abstract class JRResource extends DynamicWebResource
 	 * @param report
 	 *            the report input stream
 	 */
-	public JRResource(final File report)
-	{
-		this(new JasperReportFactory()
-		{
-			public JasperReport newJasperReport() throws JRException
-			{
+	public JRResource(final File report) {
+		this(new JasperReportFactory() {
+
+			public JasperReport newJasperReport() throws JRException {
 				return (JasperReport) JRLoader.loadObject(report);
 			}
 
@@ -208,29 +215,27 @@ public abstract class JRResource extends DynamicWebResource
 	 * @param factory
 	 *            report factory for lazy initialization
 	 */
-	private JRResource(JasperReportFactory factory)
-	{
+	private JRResource(JasperReportFactory factory) {
 		super();
 		setCacheable(false);
 		this.jasperReportFactory = factory;
 	}
 
 	/**
-	 * Gets jasperReport. This implementation uses an internal factory to lazily create the report. After creation the report is cached (set as the jasperReport property). Override this method in case you want to provide some alternative creation/ caching scheme.
-	 * @return  jasperReport
-	 * @uml.property  name="jasperReport"
+	 * Gets jasperReport. This implementation uses an internal factory to lazily
+	 * create the report. After creation the report is cached (set as the
+	 * jasperReport property). Override this method in case you want to provide
+	 * some alternative creation/ caching scheme.
+	 * 
+	 * @return jasperReport
+	 * @uml.property name="jasperReport"
 	 */
-	public JasperReport getJasperReport()
-	{
+	public JasperReport getJasperReport() {
 		// if the report has not yet been initialized and can be, initialize it
-		if (jasperReport == null && jasperReportFactory != null)
-		{
-			try
-			{
+		if (jasperReport == null && jasperReportFactory != null) {
+			try {
 				setJasperReport(jasperReportFactory.newJasperReport());
-			}
-			catch (JRException e)
-			{
+			} catch (JRException e) {
 				throw new WicketRuntimeException(e);
 			}
 		}
@@ -239,102 +244,114 @@ public abstract class JRResource extends DynamicWebResource
 
 	/**
 	 * Sets {bjasperReport.
-	 * @param report  report
-	 * @uml.property  name="jasperReport"
+	 * 
+	 * @param report
+	 *            report
+	 * @uml.property name="jasperReport"
 	 */
-	public final void setJasperReport(JasperReport report)
-	{
+	public final void setJasperReport(JasperReport report) {
 		this.jasperReport = report;
 	}
 
 	/**
-	 * Gets the report parameters. Returns a new copy of the reportParameters Map as JasperReports modifies it with not serializable objects
-	 * @return  report parameters
-	 * @uml.property  name="reportParameters"
+	 * Gets the report parameters. Returns a new copy of the reportParameters
+	 * Map as JasperReports modifies it with not serializable objects
+	 * 
+	 * @return report parameters
+	 * @uml.property name="reportParameters"
 	 */
-	public Map getReportParameters()
-	{
-                return new HashMap(reportParameters);
+	public Map getReportParameters() {
+		return new HashMap(reportParameters);
 	}
 
 	/**
 	 * Sets the report parameters.
-	 * @param params  report parameters
-	 * @return  This
-	 * @uml.property  name="reportParameters"
+	 * 
+	 * @param params
+	 *            report parameters
+	 * @return This
+	 * @uml.property name="reportParameters"
 	 */
-	public final JRResource setReportParameters(Map params)
-	{
+	public final JRResource setReportParameters(Map params) {
 		this.reportParameters = params;
 		return this;
 	}
 
 	/**
 	 * Gets the datasource if any for filling this report.
-	 * @return  the datasource if any for filling this report
-	 * @uml.property  name="reportDataSource"
+	 * 
+	 * @return the datasource if any for filling this report
+	 * @uml.property name="reportDataSource"
 	 */
-	public JRDataSource getReportDataSource()
-	{
+	public JRDataSource getReportDataSource() {
 		return reportDataSource;
 	}
 
 	/**
 	 * Sets the datasource if any for filling this report.
-	 * @param dataSource  the datasource if any for filling this report
-	 * @return  This
-	 * @uml.property  name="reportDataSource"
+	 * 
+	 * @param dataSource
+	 *            the datasource if any for filling this report
+	 * @return This
+	 * @uml.property name="reportDataSource"
 	 */
-	public JRResource setReportDataSource(JRDataSource dataSource)
-	{
+	public JRResource setReportDataSource(JRDataSource dataSource) {
 		this.reportDataSource = dataSource;
 		return this;
 	}
 
 	/**
 	 * Gets the connection provider if any for filling this report.
-	 * @return  the connection provider if any for filling this report
-	 * @uml.property  name="connectionProvider"
+	 * 
+	 * @return the connection provider if any for filling this report
+	 * @uml.property name="connectionProvider"
 	 */
-	public IDatabaseConnectionProvider getConnectionProvider()
-	{
+	public IDatabaseConnectionProvider getConnectionProvider() {
 		return connectionProvider;
 	}
 
 	/**
 	 * Sets the connection provider if any for filling this report.
-	 * @param provider  the connection provider if any for filling this report
-	 * @return  This
-	 * @uml.property  name="connectionProvider"
+	 * 
+	 * @param provider
+	 *            the connection provider if any for filling this report
+	 * @return This
+	 * @uml.property name="connectionProvider"
 	 */
-	public final JRResource setConnectionProvider(IDatabaseConnectionProvider provider)
-	{
+	public final JRResource setConnectionProvider(
+			IDatabaseConnectionProvider provider) {
 		this.connectionProvider = provider;
 		return this;
 	}
 
 	/**
-	 * Gets the file name. When set, a header 'Content-Disposition: attachment; filename="${fileName}"' will be added to the response, resulting in a download dialog. No magical extensions are added, so you should make sure the file has the extension you want yourself.
-	 * @return  the file name
-	 * @uml.property  name="fileName"
+	 * Gets the file name. When set, a header 'Content-Disposition: attachment;
+	 * filename="${fileName}"' will be added to the response, resulting in a
+	 * download dialog. No magical extensions are added, so you should make sure
+	 * the file has the extension you want yourself.
+	 * 
+	 * @return the file name
+	 * @uml.property name="fileName"
 	 */
-	public String getFileName()
-	{
-		if (fileName == null)
-		{
+	public String getFileName() {
+		if (fileName == null) {
 			fileName = getJasperReport().getName() + "." + getExtension();
 		}
 		return fileName;
 	}
 
 	/**
-	 * Sets the file name. When set, a header 'Content-Disposition: attachment; filename="${name}"' will be added to the response, resulting in a download dialog. No magical extensions are added, so you should make sure the file has the extension you want yourself.
-	 * @param name  the file name
-	 * @return  This
-	 * @uml.property  name="fileName"
+	 * Sets the file name. When set, a header 'Content-Disposition: attachment;
+	 * filename="${name}"' will be added to the response, resulting in a
+	 * download dialog. No magical extensions are added, so you should make sure
+	 * the file has the extension you want yourself.
+	 * 
+	 * @param name
+	 *            the file name
+	 * @return This
+	 * @uml.property name="fileName"
 	 */
-	public final JRResource setFileName(String name)
-	{
+	public final JRResource setFileName(String name) {
 		this.fileName = name;
 		return this;
 	}
@@ -354,10 +371,8 @@ public abstract class JRResource extends DynamicWebResource
 	 * 
 	 * @see DynamicWebResource#getResourceState()
 	 */
-	protected ResourceState getResourceState()
-	{
-		try
-		{
+	protected ResourceState getResourceState() {
+		try {
 			long t1 = System.currentTimeMillis();
 			// get a print instance for exporting
 			jasperPrint = newJasperPrint();
@@ -367,40 +382,43 @@ public abstract class JRResource extends DynamicWebResource
 
 			// prepare a stream to trap the exporter's output
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+			exporter
+					.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
 
 			// execute the export and return the trapped result
-			    exporter.exportReport();
-			
-			
-			final byte[] data = baos.toByteArray();
-			if (log.isDebugEnabled())
-			{
-				long t2 = System.currentTimeMillis();
-				log.debug("loaded report data; bytes: "
-						+ data.length + " in " + (t2 - t1) + " miliseconds");
+			try {
+				exporter.exportReport();
+			} finally {
+				// no matter what happens perform cleanup of used virtualize
+				// files
+				final Iterator<JRVirtualPrintPage> jprint = jasperPrint.getPages().iterator();
+				while (jprint.hasNext()) {
+					fileVirtualizer.deregisterObject(jprint.next());
+				}
 			}
-			return new ResourceState()
-			{
-				public int getLength()
-				{
+
+			final byte[] data = baos.toByteArray();
+			if (log.isDebugEnabled()) {
+				long t2 = System.currentTimeMillis();
+				log.debug("loaded report data; bytes: " + data.length + " in "
+						+ (t2 - t1) + " miliseconds");
+			}
+			return new ResourceState() {
+
+				public int getLength() {
 					return data.length;
 				}
 
-				public byte[] getData()
-				{
+				public byte[] getData() {
 					return data;
 				}
 
-				public String getContentType()
-				{
+				public String getContentType() {
 					return JRResource.this.getContentType();
 				}
 			};
-		}
-		catch (JRException e)
-		{
+		} catch (JRException e) {
 			throw new WicketRuntimeException(e);
 		}
 	}
@@ -426,39 +444,29 @@ public abstract class JRResource extends DynamicWebResource
 	 * 
 	 * @throws JRException
 	 */
-	protected JasperPrint newJasperPrint() throws JRException
-	{
-	    	/*final String cache = getCahceDir();
+	protected JasperPrint newJasperPrint() throws JRException {
 		
-		fileVirtualizer =   new JRFileVirtualizer(3, cache);*/
 		JasperReport report = getJasperReport();
 		Map params = getReportParameters();
 		JRDataSource dataSource = getReportDataSource();
-		//params.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
-		
-		if (dataSource != null)
-		{
-			jasperPrint = JasperFillManager.fillReport(report, params, dataSource);
-		}
-		else
-		{
+		params.put(JRParameter.REPORT_VIRTUALIZER, getFileVirtualizer());
+
+		if (dataSource != null) {
+			jasperPrint = JasperFillManager.fillReport(report, params,
+					dataSource);
+		} else {
 			IDatabaseConnectionProvider provider = null;
-			try
-			{
+			try {
 				provider = getConnectionProvider();
-				if (provider == null)
-				{
+				if (provider == null) {
 					throw new IllegalStateException(
 							"JasperReportsResources must either have a JRDataSource, "
 									+ "or a JDBC Connection provided");
 				}
-				jasperPrint = JasperFillManager
-						.fillReport(report, params, provider.get());
-			}
-			finally
-			{
-				if (provider != null)
-				{
+				jasperPrint = JasperFillManager.fillReport(report, params,
+						provider.get());
+			} finally {
+				if (provider != null) {
 					provider.release();
 				}
 			}
@@ -469,20 +477,50 @@ public abstract class JRResource extends DynamicWebResource
 	/**
 	 * @see WebResource#setHeaders(WebResponse)
 	 */
-	protected void setHeaders(WebResponse response)
-	{
-	    super.setHeaders(response);
-	    
-	    response.setDateHeader("Expires", -1);
-	    response.setHeader("Cache-Control",	"must-revalidate, post-check=0, pre-check=0");
-	    response.setHeader("Pragma", "public");
+	protected void setHeaders(WebResponse response) {
+		super.setHeaders(response);
+
+		response.setDateHeader("Expires", -1);
+		response.setHeader("Cache-Control",
+				"must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Pragma", "public");
 
 		String name = getFileName();
-		if (name != null)
-		{
+		if (name != null) {
 			response.setHeader("Content-Disposition", "attachment; filename=\""
 					+ name + "\"");
 		}
+	}
+
+	/**
+	 * Return directory where to store the cache files. if no value set for
+	 * property "org.jasper.cache.dir", it will create at "user.home" + OS
+	 * separator + jasperCache. Provided it has write permission on that
+	 * directory.
+	 * 
+	 * @return - cache directory to store tmp files
+	 */
+	protected String getCahceDir() {
+		final String dirCache = System.getProperty("org.jasper.cache.dir");
+		if (dirCache.equals("") || dirCache == null) {
+			throw new IllegalArgumentException(
+					"Please provide a jasper cache directory.JVM property: -Dorg.jasper.cache.dir=<directory>");
+		}
+		return dirCache;
+	}
+
+	public JRFileVirtualizer getFileVirtualizer() {
+		final String cache = getCahceDir();
+		log.info("jasper cache directory: " + cache);
+		if(fileVirtualizer == null)
+		{
+		    fileVirtualizer = new JRFileVirtualizer(3, cache);
+		}
+		return fileVirtualizer;
+	}
+
+	public void setFileVirtualizer(JRFileVirtualizer fileVirtualizer) {
+		this.fileVirtualizer = fileVirtualizer;
 	}
 	
 	
