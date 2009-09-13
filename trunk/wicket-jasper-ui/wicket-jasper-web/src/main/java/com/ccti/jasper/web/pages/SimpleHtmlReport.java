@@ -38,6 +38,8 @@ public class SimpleHtmlReport extends JasperIndexPage
 		"/reports/customer_sales_report.jasper"));
 	final Map<String, Object> parameters = new HashMap<String, Object>();
 
+	
+	
 	final JasperQueryProvider qdp = new JasperQueryProvider(
 		customerSalesService)
 	{
