@@ -118,7 +118,7 @@ public abstract class JRResource extends DynamicWebResource {
 	 * want our report to be serialized while we can recreate it at other
 	 * servers at will using the factory.
 	 */
-	private transient JasperReport jasperReport;
+	private JasperReport jasperReport;
 
 	/**
 	 * The report cache used.
@@ -129,7 +129,7 @@ public abstract class JRResource extends DynamicWebResource {
 	 * The compiled jasperPrint this resource references. Made transient as we
 	 * don't want our report to be serialized while we can recreate it.
 	 */
-	private transient JasperPrint jasperPrint;
+	private JasperPrint jasperPrint;
 
 	/**
 	 * the report parameters.
