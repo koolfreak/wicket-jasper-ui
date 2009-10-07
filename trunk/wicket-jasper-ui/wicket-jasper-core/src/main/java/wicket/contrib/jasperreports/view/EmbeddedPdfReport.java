@@ -16,13 +16,10 @@ import wicket.contrib.jasperreports.JRResource;
  */
 public class EmbeddedPdfReport extends WebComponent implements IResourceListener
 {
-    /**
-	 * @uml.property  name="resource"
-	 * @uml.associationEnd  
-	 */
-	transient final JRResource resource;
+    
+	transient private JRResource resource;
 	/**
-	 * Construcxt.
+	 * Construct.
 	 * 
 	 * @param componentID
 	 *            component componentID
