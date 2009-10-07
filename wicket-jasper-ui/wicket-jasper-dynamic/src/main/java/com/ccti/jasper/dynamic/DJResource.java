@@ -28,32 +28,40 @@ public abstract class DJResource extends JRResource
     protected DynamicReportBuilder reportBuilder;
     
     protected LayoutManager layoutManager;
+    
+    private final Map<String, Object> param;
 
     public DJResource()
     {
 	super();
+	param = new HashMap<String, Object>();
+	param.put(JRParameter.REPORT_VIRTUALIZER, getFileVirtualizer());
     }
     
     public DJResource(InputStream report)
     {
 	super(report);
+	param = new HashMap<String, Object>();
+	param.put(JRParameter.REPORT_VIRTUALIZER, getFileVirtualizer());
     }
     
     public DJResource(URL report)
     {
 	super(report);
+	param = new HashMap<String, Object>();
+	param.put(JRParameter.REPORT_VIRTUALIZER, getFileVirtualizer());
     }
     
     public DJResource(File report)
     {
 	super(report);
+	param = new HashMap<String, Object>();
+	param.put(JRParameter.REPORT_VIRTUALIZER, getFileVirtualizer());
     }
     
     @Override
     protected JasperPrint newJasperPrint() throws JRException
     {
-	final Map<String, Object> param = new HashMap<String, Object>();
-	param.put(JRParameter.REPORT_VIRTUALIZER, getFileVirtualizer());
 	
 	return  DynamicJasperHelper.generateJasperPrint(getDynamicReport(), getLayoutManager(), getReportDataSource(), param);
 	
