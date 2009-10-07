@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -37,6 +38,16 @@ public class JasperLoginPage extends WebPage
     {
 	final Form form = new Form("login", new CompoundPropertyModel(new JasperObject()));
 	add(form);
+	
+	final IndicatingAjaxLink alink = new IndicatingAjaxLink("alink"){
+	    @Override
+	    public void onClick(AjaxRequestTarget target)
+	    {
+		// TODO [eman] - 
+		System.out.println("here eman");
+	    }
+	};
+	add(alink);
 	
 	final FeedbackPanel feed = new FeedbackPanel("feedback");
 	form.add(feed.setOutputMarkupId(true));
