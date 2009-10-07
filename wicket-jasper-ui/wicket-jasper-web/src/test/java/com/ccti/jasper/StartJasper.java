@@ -22,7 +22,7 @@ public class StartJasper {
 		
 		bb.setWar("src/main/webapp");
 
-		
+		System.setProperty("org.jasper.cache.dir", "/home/emanux/jaspercache");
 		// START JMX SERVER
 		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 		// MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
