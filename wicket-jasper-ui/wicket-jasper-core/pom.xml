@@ -47,42 +47,32 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- LOGGING DEPENDENCIES - LOG4J -->
-		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-			<version>1.7.0</version>
-			<type>jar</type>
-		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
 		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.1</version>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>commons-digester</groupId>
-			<artifactId>commons-digester</artifactId>
-			<version>1.7</version>
-			<type>jar</type>
-		</dependency>
+
 		<dependency>
 			<groupId>jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>3.1.2</version>
+			<version>3.5.3</version>
 			<type>jar</type>
 		</dependency>
-		
+
+		<!-- XLS exporter -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.0.1-final</version>
+			<version>3.2-FINAL</version>
 		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6</version>
+		</dependency>
+		
+		<!-- logging dependency -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -134,10 +124,6 @@
 			</testResource>
 		</testResources>
 		<plugins>
-			<!--
-				plugin> <groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId> </plugin
-			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -191,21 +177,7 @@
 	</build>
 
 	<properties>
-		<wicket.version>1.3.5</wicket.version>
+		<wicket.version>1.3.7</wicket.version>
 	</properties>
-
-	<distributionManagement>
-		<!--
-			repository> <id>wicket-jasper</id> <name>Wicket-Jasper
-			Repository</name> <url>
-			https://wicket-jasper-ui.googlecode.com/svn/wicket-jasper-repo </url>
-			</repository
-		-->
-		<repository>
-			<id>sxi.internal</id>
-			<name>SXI Internal</name>
-			<url>http://www.sxchange.com.ph:8086/archiva/repository/internal</url>
-		</repository>
-	</distributionManagement>
 
 </project>
