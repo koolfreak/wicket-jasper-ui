@@ -17,6 +17,7 @@ import com.ccti.jasper.dynamic.core.SerializableDynamicReportBuilder;
  * created 2009 8 7 - 23:40:11
  */
 
+
 public class DJDynamicReport extends DJReportBase
 {
 
@@ -52,5 +53,9 @@ public class DJDynamicReport extends DJReportBase
     {
 	return new ClassicLayoutManager();
     }
+    
+    /**
+     * DynamicJasper URL: http://dynamicjasper.sourceforge.net/index.html
+     */
 
 }
