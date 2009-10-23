@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carnelian>
+
+	<!-- 
+		| Use to expose report page from server for access remotely.
+		| Define the name of the report and the report-page class.
+		| The factory class will load the class dynamically base on the report name.
+	 -->
 	<jasper-reports>
 	
 		<report name="simple" type="com.ccti.jasper.web.pages.SimpleHtmlReport"/>
