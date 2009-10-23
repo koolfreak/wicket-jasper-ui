@@ -6,16 +6,10 @@
 
 	<display-name>wicket-jasper-web</display-name>
 
-	<!--  
-		There are three means to configure Wickets configuration mode and they are
-		tested in the order given. 
-		1) A system property: -Dwicket.configuration
-		2) servlet specific <init-param>
-		3) context specific <context-param>
-		The value might be either "development" (reloading when templates change)
-		or "deployment". If no configuration is found, "development" is the default.
-	-->
-
+	<!-- 
+		|Initialize this listener to load the reports-config.xml and other xml config
+		|found in /WEB-INF/reports-config/
+	 -->
 	<listener>
 		<listener-class>
 			com.ccti.jasper.web.core.config.JasperInitializer
@@ -69,7 +63,7 @@
 			<param-value>deployment</param-value>
 	</context-param>
 
-	<!-- Jasper Report servlet -->
+	<!-- Jasper Report servlet - use to generate blank images for spacing purposes -->
 	<servlet>
 		<servlet-name>ImageServlet</servlet-name>
 		<servlet-class>
@@ -80,9 +74,10 @@
 	<!-- Jasper Report servlet mapping -->
 	<servlet-mapping>
 		<servlet-name>ImageServlet</servlet-name>
-		<url-pattern>/servlets/image</url-pattern>
+		<url-pattern>/reports/image/*</url-pattern>
 	</servlet-mapping>
 
+	<!-- some expose webservice access using cxf -->
 	<servlet>
 		<servlet-name>CXFServlet</servlet-name>
 		<servlet-class>
@@ -94,8 +89,11 @@
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
 	
-	<!-- htt service configuration -->
-	<!-- logout servlets -->
+	<!-- ================================== -->
+	<!-- http service configuration -->
+	<!-- ================================== -->
+	
+	<!-- logout servlet - use to logout from report server remotely -->
 	<servlet>
 		<servlet-name>JasperLogout</servlet-name>
 		<servlet-class>
@@ -107,12 +105,15 @@
 		<url-pattern>/logout/*</url-pattern>
 	</servlet-mapping>
 
-	<!-- login servlets -->
+	<!-- login servlet - use to loging from report server remotely -->
 	<servlet>
 		<servlet-name>JasperLogin</servlet-name>
 		<servlet-class>
 			com.ccti.jasper.http.service.JasperLogInServlet
 		</servlet-class>
+		<!-- 
+			| this param is the remote bridge url were the serialize object came from 
+		-->
 		<init-param>
 			<param-name>bridge-url</param-name>
 			<param-value>http://localhost:8282/bridge</param-value>
