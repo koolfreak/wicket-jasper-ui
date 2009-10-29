@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+  <groupId>com.ccti.jasper</groupId>
+  <artifactId>wicket-jasper-webservice</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20091029.075720</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20091029075741</lastUpdated>
+  </versioning>
+</metadata>
