@@ -140,9 +140,9 @@
 
 
 	<modules>
-		<module>wicket-jasper-core</module>
-		<module>wicket-jasper-web</module>
-		<module>wicket-jasper-bridge</module>
+		<!-- module>wicket-jasper-core</module -->
+		<!-- module>wicket-jasper-web</module -->
+		<!-- module>wicket-jasper-bridge</module -->
 		<module>wicket-jasper-webservice</module>
 		<module>wicket-jasper-httpservice</module>
 		<module>wicket-jasper-dynamic</module>
@@ -156,7 +156,7 @@
 
 	<distributionManagement>
 		<repository>
-			<id>wicket-jasper</id>
+			<id>cybernetics</id>
 			<name>Local Releases Repository</name>
 			<url>svn:https://wicket-jasper-ui.googlecode.com/svn/wicket-jasper-repo/</url>
 		</repository>
