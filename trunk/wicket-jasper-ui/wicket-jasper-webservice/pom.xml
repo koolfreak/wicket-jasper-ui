@@ -14,7 +14,7 @@
 	<artifactId>wicket-jasper-webservice</artifactId>
 	<name>wicket-jasper-webservice</name>
 
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 
 	<url>http://maven.apache.org</url>
 
@@ -98,7 +98,7 @@
 			<artifactId>cxf-common-utilities</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>
-	
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -146,6 +146,13 @@
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<updateReleaseInfo>true</updateReleaseInfo>
 				</configuration>
 			</plugin>
 		</plugins>
