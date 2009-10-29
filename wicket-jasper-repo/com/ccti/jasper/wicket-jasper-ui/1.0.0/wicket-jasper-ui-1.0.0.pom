@@ -143,9 +143,9 @@
 		<!-- module>wicket-jasper-core</module -->
 		<!-- module>wicket-jasper-web</module -->
 		<!-- module>wicket-jasper-bridge</module -->
-		<module>wicket-jasper-webservice</module>
+		<!-- module>wicket-jasper-webservice</module -->
 		<module>wicket-jasper-httpservice</module>
-		<module>wicket-jasper-dynamic</module>
+		<!-- module>wicket-jasper-dynamic</module -->
 	</modules>
 	
 	<scm>
