@@ -37,18 +37,18 @@ public class TestDynamicFilter extends JasperIndexPage
 	{
 	    field.add(fields[i].getName());
 	}
-	final Form form = new Form("djform");
+	final Form<Void> form = new Form<Void>("djform");
 	add(form);
 	
-	final CheckGroup fieldgrp = new CheckGroup("chkflds",new ArrayList<String>());
+	final CheckGroup<String> fieldgrp = new CheckGroup<String>("chkflds",new ArrayList<String>());
 	
-	final ListView fieldview = new ListView("fielddj",field)
+	final ListView<String> fieldview = new ListView<String>("fielddj",field)
 	{
 	    @Override
-	    protected void populateItem(ListItem item)
+	    protected void populateItem(ListItem<String> item)
 	    {
-		item.add(new Check("sel",item.getModel()));
-		item.add(new Label("prop",StringUtils.capitalize(item.getModelObjectAsString())) );
+		item.add(new Check("sel",item.getDefaultModel()));
+		item.add(new Label("prop",StringUtils.capitalize(item.getDefaultModelObjectAsString())) );
 	    }
 	};
 	

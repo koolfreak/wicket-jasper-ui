@@ -146,6 +146,7 @@
 		<module>wicket-jasper-webservice</module>
 		<module>wicket-jasper-httpservice</module>
 		<module>wicket-jasper-dynamic</module>
+		<module>jasper-barcode-connector</module>
 	</modules>
 	
 	<scm>

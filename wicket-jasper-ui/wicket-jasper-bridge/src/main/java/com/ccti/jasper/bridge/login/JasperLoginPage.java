@@ -29,61 +29,66 @@ import com.ccti.jasper.session.JasperSession;
  */
 public class JasperLoginPage extends WebPage
 {
-    @SpringBean private CallRemoteService remoteService;
-    
-    private static final Log log = LogFactory.getLog(JasperLoginPage.class);
-    
-    
-    public JasperLoginPage()
-    {
-	final Form form = new Form("login", new CompoundPropertyModel(new JasperObject()));
-	add(form);
-	
-	final IndicatingAjaxLink alink = new IndicatingAjaxLink("alink"){
-	    @Override
-	    public void onClick(AjaxRequestTarget target)
-	    {
-		// TODO [eman] - 
-		System.out.println("here eman");
-	    }
-	};
-	add(alink);
-	
-	final FeedbackPanel feed = new FeedbackPanel("feedback");
-	form.add(feed.setOutputMarkupId(true));
-	
-	form.add(new RequiredTextField("username"));
+	@SpringBean
+	private CallRemoteService remoteService;
 
-	final IndicatingAjaxButton login = new IndicatingAjaxButton("butt", form) {
+	private static final Log log = LogFactory.getLog(JasperLoginPage.class);
 
-	    @Override
-	    protected void onSubmit(AjaxRequestTarget target, Form form)
-	    {
-		final JasperObject obj = (JasperObject) form.getModelObject();
-		obj.setReportId(RandomStringUtils.randomAlphanumeric(50));
+	public JasperLoginPage()
+	{
+		final Form form = new Form("login", new CompoundPropertyModel(
+				new JasperObject()));
+		add(form);
 
-		JasperSingle jast = JasperSingle.getInstance();
-		jast.setJasperObject(obj);
-		JasperSession.get().setReportId(obj.getReportId());
-		
-		if (remoteService.callRemoteLogin())
+		final IndicatingAjaxLink alink = new IndicatingAjaxLink("alink")
 		{
-		    setResponsePage(JasperBridgeIndex.class);
-		}
-		else
-		{
-		    log.debug("Failed to send to report server");
-		}
-	    }
-	    @Override
-	    protected void onError(AjaxRequestTarget target, Form form)
-	    {
-		target.addComponent(feed);
-		super.onError(target, form);
-	    }
-	};
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				// TODO [eman] -
+				System.out.println("here eman");
+			}
+		};
+		add(alink);
 
-	form.add(login);
-    }
+		final FeedbackPanel feed = new FeedbackPanel("feedback");
+		form.add(feed.setOutputMarkupId(true));
+
+		form.add(new RequiredTextField("username"));
+
+		final IndicatingAjaxButton login = new IndicatingAjaxButton("butt",
+				form)
+		{
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form form)
+			{
+				final JasperObject obj = (JasperObject) form.getModelObject();
+				obj.setReportId(RandomStringUtils.randomAlphanumeric(50));
+
+				JasperSingle jast = JasperSingle.getInstance();
+				jast.setJasperObject(obj);
+				JasperSession.get().setReportId(obj.getReportId());
+
+				if (remoteService.callRemoteLogin())
+				{
+					setResponsePage(JasperBridgeIndex.class);
+				}
+				else
+				{
+					log.debug("Failed to send to report server");
+				}
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form form)
+			{
+				target.addComponent(feed);
+				super.onError(target, form);
+			}
+		};
+
+		form.add(login);
+	}
 
 }
