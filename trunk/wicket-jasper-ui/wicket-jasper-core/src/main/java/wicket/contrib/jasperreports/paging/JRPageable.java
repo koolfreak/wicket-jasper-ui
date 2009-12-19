@@ -131,7 +131,7 @@ public abstract class JRPageable<E> extends JRRepeater implements IPageable
      */
     public int getViewSize()
     {
-	if (getModelObject() != null)
+	if (getDefaultModelObject() != null)
 	{
 	    super.setStartIndex(getCurrentPage() * getRowsPerPage());
 	    super.setViewSize(getRowsPerPage());
@@ -242,7 +242,7 @@ public abstract class JRPageable<E> extends JRRepeater implements IPageable
 		    add(item);
 		}
 
-		datas.add((E) getListItemModel(getModel(), index).getObject());
+		datas.add((E) getListItemModel(getDefaultModel(), index).getObject());
 
 	    }
 	    displayReport(item);

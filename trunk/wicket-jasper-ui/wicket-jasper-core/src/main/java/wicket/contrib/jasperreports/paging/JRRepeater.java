@@ -90,7 +90,7 @@ public abstract class JRRepeater extends AbstractRepeater
 	 */
 	public final List getList()
 	{
-		final List list = (List)getModelObject();
+		final List list = (List) getDefaultModelObject();
 		if (list == null)
 		{
 			return Collections.EMPTY_LIST;
@@ -127,7 +127,7 @@ public abstract class JRRepeater extends AbstractRepeater
 	{
 		int size = viewSize;
 
-		final Object modelObject = getModelObject();
+		final Object modelObject = getDefaultModelObject();
 		if (modelObject == null)
 		{
 			return size == Integer.MAX_VALUE ? 0 : size;
@@ -181,7 +181,7 @@ public abstract class JRRepeater extends AbstractRepeater
 	 */
 	public Component setModel(IModel model)
 	{
-		return super.setModel(model);
+		return super.setDefaultModel(model);
 	}
 
 	/**
@@ -263,7 +263,7 @@ public abstract class JRRepeater extends AbstractRepeater
 	 */
 	protected ListItem newItem(final int index)
 	{
-		return new ListItem(index, getListItemModel(getModel(), index));
+		return new ListItem(index, getListItemModel(getDefaultModel(), index));
 	}
 
 	/**

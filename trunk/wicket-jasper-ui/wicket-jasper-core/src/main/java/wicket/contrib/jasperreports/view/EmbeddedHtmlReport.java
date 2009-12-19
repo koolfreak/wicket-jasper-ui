@@ -35,7 +35,7 @@ public final class EmbeddedHtmlReport extends Label implements IResourceListener
 	try
 	{
 	   is = this.resource.getResourceStream().getInputStream();
-	   setModel(new Model(IOUtils.toString(is)));
+	   setDefaultModel(new Model<String>(IOUtils.toString(is)));
 	    
 	}
 	catch (ResourceStreamNotFoundException e)
